@@ -164,7 +164,7 @@ window.huopadesktop = (() => {
                     }
                 }
 
-                const logoSuccess = await fetchAndStoreImage(`https://raw.githubusercontent.com/allucat1000/HuopaOS/main/HuopaLogo.png`, "/system/env/assets/huopalogo.png");
+                const logoSuccess = await fetchAndStoreImage(`https://raw.githubusercontent.com/allucat1000/HuopaOS/main/BlobsLogo.png`, "/system/env/assets/BlobsLogo.png");
                 await sys.addLine("Wallpapers and logo fetched and installed!");
                 sys.addLine("[line=blue]Installing styles...[/line]");
 
@@ -2231,7 +2231,7 @@ window.huopadesktop = (() => {
 
             desktop.append(dock);
 
-            const huopalogoURI = await internalFS.getFile("/system/env/assets/huopalogo.png");
+            const huopalogoURI = await internalFS.getFile("/system/env/assets/BlobsLogo.png");
             const huopalogoBlob = await dataURIToBlob(huopalogoURI);
             const huopalogo = URL.createObjectURL(huopalogoBlob);
             const startMenuButton = quantum.document.createElement("button");

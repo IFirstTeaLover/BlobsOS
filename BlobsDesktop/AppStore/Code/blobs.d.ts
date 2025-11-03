@@ -114,3 +114,4 @@ declare var blobsAPI: BlobsAPI;
 declare function setAttrs(element: HTMLElement, attrs: Record<string, any>): Promise<void>;
 declare function importModule(moduleName: string): Promise<any>;
 declare var systemStyles: HTMLStyleElement;
+console.log("ASD");

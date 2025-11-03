@@ -143,7 +143,7 @@ async function mainScreen() {
     };
 }
 async function wallpapersTabLoad() {
-    await blobsAPI.setTitle("Settings — Wallpapers");
+    await blobsAPI.setTitle("Settings - Wallghjapers");
     const mainScreenDiv = document.createElement("div");
     const title = document.createElement("h1");
     title.textContent = "Wallpapers";
@@ -153,7 +153,7 @@ async function wallpapersTabLoad() {
 
     const backButton = document.createElement("button");
     backButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>';
-    backButton.style = "padding: 1em; position: fixed; left: 0.5em; bottom: 0.5em; display: flex; width: 45px; height: 45px; align-items: center; justify-content: center;";
+    backButton.style = "padding: 1em; position: fixed; left: 0.5vh; bottom: 0.5vh; display: flex; width: 45px; height: 45px; align-items: center; justify-content: center;";
 
     mainScreenDiv.append(backButton);
     backButton.onclick = async () => {
@@ -161,8 +161,8 @@ async function wallpapersTabLoad() {
         await mainScreen();
     };
 
-    const wallpaperList = JSON.parse(await blobsAPI.getFile("/system/env/wallpapers") || "[]");
-
+    const wallpaperList = JSON.parse(await blobsAPI.getFile("/system/env/wallpapers/preview") || "[]");
+    console.log("wallpaperList")
     if (wallpaperList.length < 1) {
         const warning = document.createElement("h2");
         warning.textContent = 'You are in an outdated version of BlobsDesktop with an incorrect wallpaper config! Press "Shutdown" in the start menu and press "C" when you are in the terminal, then run "hpkg update" and "blobsdesktop install".';
@@ -181,12 +181,12 @@ async function wallpapersTabLoad() {
 
     for (const wallpaperPath of wallpaperList) {
         const wallpaperButton = document.createElement("button");
-        wallpaperButton.style.width = "25%";
+        wallpaperButton.style.width = blobsAPI.getWindowSize() / 5 + "px";
         wallpaperButton.style.margin = "1em";
         wallpaperButton.style.overflow = "hidden";
-        wallpaperButton.style.minWidth = "200px";
-        wallpaperButton.style.flex = "1 0 100px";
-        wallpaperButton.style.maxWidth = "200px";
+        wallpaperButton.style.minWidth = blobsAPI.getWindowSize() / 5 + "px";
+        wallpaperButton.style.flex = "1 0 " + blobsAPI.getWindowColor();
+        wallpaperButton.style.maxWidth = blobsAPI.getWindowSize() / 5 + "px";
         wallpaperButton.style.aspectRatio = "16 / 9";
         wallpaperButton.style.padding = "0";
 

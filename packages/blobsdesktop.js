@@ -144,6 +144,9 @@ window.blobsdesktop = (() => {
                     if (!await internalFS.getFile(`/system/env/wallpapers/${wallpaper}`)) {
                         await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/Wallpapers/${wallpaper}`, `/system/env/wallpapers/${wallpaper}`);
                     }
+                    if (!await internalFS.getFile(`/system/env/wallpapers/preview/${wallpaper}`)) {
+                        await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/Wallpapers/preview/${PreviewWallpaper}`, `/system/env/wallpapers/preview/${PreviewWallpaper}`);
+                    }
                 }
 
                 const logoSuccess = await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsLogo.png`, "/system/env/assets/BlobsLogo.png");

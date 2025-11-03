@@ -204,7 +204,7 @@ let inputAnswerActive = false;
 let keysLocked = false;
 let inputAnswer = undefined;
 sys.addLine("## Booting system...");
-sys.addLine("### Made by [color=rgb(100, 175, 255)]Allucat1000.[/color][color=rgba(240, 74, 74, 1)]BulbaSprout.[/color]");
+sys.addLine("### Made by [color=rgb(100, 175, 255)]Allucat1000.[/color] Forked by [color=rgba(240, 74, 74, 1)]BulbaSprout.[/color]");
 sys.addLine("Use the \"hpkg install\" to install a package. \n Make sure to update your packages often using \"hpkg update\".")
 const currentVer = "0.5.0"
 const verBranch = "main";

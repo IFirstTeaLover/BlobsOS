@@ -143,7 +143,7 @@ async function mainScreen() {
     };
 }
 async function wallpapersTabLoad() {
-    await blobsAPI.setTitle("Settings - Wallghjapers");
+    await blobsAPI.setTitle("Settings - Wallpapers");
     const mainScreenDiv = document.createElement("div");
     const title = document.createElement("h1");
     title.textContent = "Wallpapers";

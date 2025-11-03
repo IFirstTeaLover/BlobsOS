@@ -1,6 +1,6 @@
 {
-  "name": "HuopaOS",
-  "short_name": "HuopaOS",
+  "name": "BlobsOS",
+  "short_name": "Blobs",
   "start_url": "./",
   "display": "standalone",
   "orientation":"landscape",

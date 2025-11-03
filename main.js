@@ -18,8 +18,8 @@
 
 
 if (typeof window === "undefined") {
-  console.error("HuopaOS requires a browser with storage capabilities.");
-  throw new Error("HuopaOS requires a browser environment.");
+  console.error("BlobsOS requires a browser with storage capabilities.");
+  throw new Error("BlobsOS requires a browser environment.");
 }
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./service-worker.js", { scope: "./" })
@@ -41,7 +41,7 @@ window.sys = {
   async import(name) {
     try {
             await sys.addLine(`[line=blue]Downloading ${name}...[/line]`)
-            const url = `https://raw.githubusercontent.com/allucat1000/HuopaOS/${verBranch}/modules/${name}.js?v=${Date.now()}`;
+            const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/modules/${name}.js?v=${Date.now()}`;
             const response = await fetch(url);
     
             if (response.ok) {
@@ -204,7 +204,7 @@ let inputAnswerActive = false;
 let keysLocked = false;
 let inputAnswer = undefined;
 sys.addLine("## Booting system...");
-sys.addLine("### Made by [color=rgb(100, 175, 255)]Allucat1000.[/color]");
+sys.addLine("### Made by [color=rgb(100, 175, 255)]Allucat1000.[/color][color=rgba(240, 74, 74, 1)]BulbaSprout.[/color]");
 sys.addLine("Use the \"hpkg install\" to install a package. \n Make sure to update your packages often using \"hpkg update\".")
 const currentVer = "0.5.0"
 const verBranch = "main";
@@ -254,7 +254,7 @@ textInput.addEventListener('keydown', function(event) {
 });
 
 
-const DB_NAME = "HuopaOS";
+const DB_NAME = "BlobsOS";
 const STORE_NAME = "files";
 
 function openDB() {
@@ -397,7 +397,9 @@ const internalFS = {
 
       if (isDir) {
         if (recursive) {
-          await internalFS.delDir(item, permissions, recursive, force, visited);
+          if (item != "/" && item != "/system"){
+            await internalFS.delDir(item, permissions, recursive, force, visited);
+          }else sys.addLine(`[line=red]Cannot delete directory ${item} because it will result in system breaking permanently[/line]`)
         } else {
           if (!force) sys.addLine(`[line=red]Cannot delete directory ${item} without recursive flag[/line]`);
           return;
@@ -443,7 +445,7 @@ const internalFS = {
   async downloadPackage(pkgName) {
     try {
       await sys.addLine(`[line=blue]Downloading ${pkgName}...[/line]`);
-      const url = `https://raw.githubusercontent.com/allucat1000/HuopaOS/${verBranch}/packages/${pkgName}.js?v=${Date.now()}`;
+      const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/packages/${pkgName}.js?v=${Date.now()}`;
       const response = await fetch(url);
 
       if (response.ok) {
@@ -570,7 +572,7 @@ async function callCMD(input, params) {
         }
         if (params[1].toLowerCase())
         await internalFS.downloadPackage(params[1].toLowerCase());
-        const manifestFetch = await fetch(`https://raw.githubusercontent.com/allucat1000/HuopaOS/${verBranch}/packages/${params[1].toLowerCase()}.js.config?v=${Date.now()}`);
+        const manifestFetch = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/packages/${params[1].toLowerCase()}.js.config?v=${Date.now()}`);
         let data
         if (manifestFetch.ok) {
           data = await manifestFetch.text()
@@ -592,7 +594,7 @@ async function callCMD(input, params) {
           if (packageList[i].endsWith(".config")) return;
           let oldManifest = await internalFS.getFile(`${packageList[i]}.config`);
           let updatePackage = false;
-          const manifestFetch = await fetch(`https://raw.githubusercontent.com/allucat1000/HuopaOS/${verBranch}/packages/${packageList[i].replace("/system/packages/","")}.config?v=${Date.now()}`);
+          const manifestFetch = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/packages/${packageList[i].replace("/system/packages/","")}.config?v=${Date.now()}`);
           if (manifestFetch.ok) {
             let data = await manifestFetch.text()
             data = JSON.parse(data);
@@ -615,7 +617,7 @@ async function callCMD(input, params) {
           
         }
         try {
-            const url = `https://raw.githubusercontent.com/allucat1000/HuopaOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
+            const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
             const response = await fetch(url);
     
             if (response.ok) {
@@ -723,7 +725,7 @@ async function init(reinstall) {
       }));
 
       try {
-            const url = `https://raw.githubusercontent.com/allucat1000/HuopaOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
+            const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
             const response = await fetch(url);
     
             if (response.ok) {
@@ -739,8 +741,8 @@ async function init(reinstall) {
             await sys.addLine(`Error: ${e}`);
         }
       sys.addLine("[line=green]Terminal commands installed[/line]");
-      await internalFS.downloadPackage("huopadesktop");
-      await callCMD("huopadesktop", ["install"]);
+      await internalFS.downloadPackage("blobsdesktop");
+      await callCMD("blobsdesktop", ["install"]);
       
     } else {
         await sys.addLine("**System file creation cancelled.**")

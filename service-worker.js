@@ -1,13 +1,13 @@
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.open("huopaos-cache").then((cache) =>
+    caches.open("blobsOs-cache").then((cache) =>
       cache.addAll([
-        "/HuopaOS/",
-        "/HuopaOS/index.html",
-        "/HuopaOS/main.js",
-        "/HuopaOS/manifest.json",
-        "/HuopaOS/icon-192.png",
-        "/HuopaOS/icon-512.png"
+        "/BlobsOS/",
+        "/BlobsOS/index.html",
+        "/BlobsOS/main.js",
+        "/BlobsOS/manifest.json",
+        "/BlobsOS/icon-192.png",
+        "/BlobsOS/icon-512.png"
       ])
     )
   );

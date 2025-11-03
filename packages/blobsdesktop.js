@@ -175,6 +175,9 @@ window.blobsdesktop = (() => {
                 if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/dockedTaskbar.txt")) {
                     await internalFS.createPath("/system/env/systemconfig/settings/customization/dockedTaskbar.txt", "file", true)
                 }
+                if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/displaySeconds.txt")) {
+                    await internalFS.createPath("/system/env/systemconfig/settings/customization/displaySeconds.txt", "file", false)
+                }
                 const skipStyles = await internalFS.getFile("/system/env/noStyleUpdate.txt");
                 if (!skipStyles) {
                     await internalFS.createPath("/system/env/noStyleUpdate.txt", "file", "false");
@@ -2220,7 +2223,7 @@ window.blobsdesktop = (() => {
             const blobslogoBlob = await dataURIToBlob(blobslogoURI); // haha funny blobs blob
             const blobslogo = URL.createObjectURL(blobslogoBlob);
             const startMenuButton = quantum.document.createElement("button");
-            startMenuButton.style = `outline: none; background-image: url(${blobslogo}); background-size: contain; background-repeat: no-repeat; background-position: center; width: 4em; height: 4em; border: none; background-color: transparent; border-radius: 50%; margin: 0.66em; transition: 0.15s;cursor: pointer; transform-origin: center;`;
+            startMenuButton.style = `outline: none; background-image: url(${blobslogo}); background-size: contain; background-repeat: no-repeat; background-position: center; width: 4em; height: 4em; border: none; background-color: transparent; border-radius: 0%; margin: 0.66em; transition: 0.15s;cursor: pointer; transform-origin: center;`;
             const appBar = quantum.document.createElement("div");
             const clockDiv = quantum.document.createElement("div");
             clockDiv.id = "clockDiv";
@@ -2236,7 +2239,12 @@ window.blobsdesktop = (() => {
 
                 const loop = () => {
                     const now = new Date();
-                    clockCurrentTime.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+                    if (internalFS.getFile("/system/env/systemconfig/settings/customization/displaySeconds.txt")){
+                        clockCurrentTime.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+                    }else{
+                        clockCurrentTime.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`
+                    }
+
 
                     let date = now.getDate();
                     let dateEnding = "th";

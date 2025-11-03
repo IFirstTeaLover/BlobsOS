@@ -1,10 +1,10 @@
 let code;
 let path = loadParams;
 if (path) {
-    code = await huopaAPI.getFile(path);
-    await huopaAPI.setTitle(`Code — ${path.split("/").pop()}`);
+    code = await blobsAPI.getFile(path);
+    await blobsAPI.setTitle(`Code — ${path.split("/").pop()}`);
 } else {
-    await huopaAPI.setTitle("Code");
+    await blobsAPI.setTitle("Code");
 }
 
 const editor = document.createElement("div");
@@ -16,7 +16,7 @@ editor.id = "editor";
 document.body.append(editor);
 const script = document.createElement("script");
 script.src = "https://unpkg.com/monaco-editor@latest/min/vs/loader.js";
-const huopaAPISpellcheck = await huopaAPI.applicationStorageRead("huopa.d.ts");
+const blobsAPISpellcheck = await blobsAPI.applicationStorageRead("huopa.d.ts");
 let chosenTheme;
 const testEl = document.createElement("div");
 await setAttrs(testEl, {"class":"primary", "style":"display: none;"});
@@ -76,8 +76,8 @@ requestAnimationFrame(() => {
 
             monaco.editor.setTheme('transparent-theme');
 
-            monaco.languages.typescript.javascriptDefaults.addExtraLib(huopaAPISpellcheck);
-            monaco.languages.typescript.typescriptDefaults.addExtraLib(huopaAPISpellcheck);
+            monaco.languages.typescript.javascriptDefaults.addExtraLib(blobsAPISpellcheck);
+            monaco.languages.typescript.typescriptDefaults.addExtraLib(blobsAPISpellcheck);
         });
     };
 })
@@ -89,15 +89,15 @@ document.body.addEventListener("keydown", async(e) => {
             e.preventDefault();
             code = monacoEditor.getValue();
             if (path) {
-                huopaAPI.writeFile(path, "file", code)
+                blobsAPI.writeFile(path, "file", code)
             } else {
-                path = await huopaAPI.openSaveDialog();
+                path = await blobsAPI.openSaveDialog();
                 if (path) {
-                    huopaAPI.writeFile(path, "file", code)
+                    blobsAPI.writeFile(path, "file", code)
                     const model = monacoEditor.getModel();
                     const lang = getLanguageFromExtension(path);
                     monaco.editor.setModelLanguage(model, lang);
-                    await huopaAPI.setTitle(`Code — ${path.split("/").pop()}`);
+                    await blobsAPI.setTitle(`Code — ${path.split("/").pop()}`);
                 }
             }
         }

@@ -413,8 +413,7 @@ window.blobsdesktop = (() => {
         daemonFunc();
     }
     const induceCrash = async (error) => {
-        // const mainDiv = quantum.document.getElementById("termDiv");
-        //     mainDiv.innerHTML = ""
+
         console.log("FATAL!")
         await sys.addLine("## --!--")
         await sys.addLine("### An unhandled exeption has occurred in BlobsDesktop and the system has been forced to halt.");

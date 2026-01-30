@@ -36,18 +36,22 @@
             width: 100%;
         }
 
+        #term-div, #inputLabel {
+            display: none;
+            position: absolute;
+        }
     </style>
 </head>
 
 <body>
-    <!-- <div id="termDiv"></div>
-        <label id="inputLabel" style="display: inline-flex; align-items: center; white-space: nowrap; width: 100%;">
-            <span style="user-select: none;">$&nbsp;</span>
-            <input id="textInput" type="text" autocorrect="off" spellcheck="false"
-                style="border: none; outline: none; font-family: inherit; background: transparent; color: inherit; flex: 1; min-width: 0;" />
-        </label>
-    </div> -->
-<div id="oobe"></div>
+    <div id="termDiv"></div>
+    <label id="inputLabel" style="display: inline-flex; align-items: center; white-space: nowrap; width: 100%;">
+        <span style="user-select: none;">$&nbsp;</span>
+        <input id="textInput" type="text" autocorrect="off" spellcheck="false"
+            style="border: none; outline: none; font-family: inherit; background: transparent; color: inherit; flex: 1; min-width: 0;" />
+    </label>
+    </div>
+    <div id="oobe"></div>
 </body>
 <script src="main.js" defer></script>
 

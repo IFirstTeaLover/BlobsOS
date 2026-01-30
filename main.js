@@ -483,7 +483,7 @@ const internalFS = {
 
     
 
-    const answer = "a";
+    const answer = "y";
     if (["y", "", "a"].includes(answer)) {
       try {
         if (["a", ""].includes(answer) && !allowList.includes(path)) {
@@ -809,11 +809,11 @@ async function bootMGR() {
 
 init();
 
-async function termContentChange(data) {
-  if (data.toLowerCase() === "clear") {
-    document.getElementById("termDiv").innerHTML = "";
-  }
-}
+// async function termContentChange(data) {
+//   if (data.toLowerCase() === "clear") {
+//     document.getElementById("termDiv").innerHTML = "";
+//   }
+// }
 
 function waitUntil(conditionFn, checkInterval = 50) {
   return new Promise(resolve => {

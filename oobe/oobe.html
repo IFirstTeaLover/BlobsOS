@@ -1,0 +1,86 @@
+<div class="bg">
+    <div class="oobe-card">
+        <div class="oobe-content">
+            <div class="left">
+                <h1>Welcome</h1>
+                <p>Let's get a few things ready for you</p>
+            </div>
+
+            <div class="right">
+                <div class="selections">
+                    <h3>Select apps you want to be installed:</h3>
+                    <button class="apps-selall">Select All</button>
+                    <label class="selection">
+                        <input type="checkbox">
+                        <span class="label-text">Calculator</span>
+                    </label>
+
+                    <label class="selection">
+                        <input type="checkbox">
+                        <span class="label-text">Notepad</span>
+                    </label>
+
+                    <label class="selection">
+                        <input type="checkbox">
+                        <span class="label-text">Paint</span>
+                    </label>
+                    <label class="selection">
+                        <input type="checkbox">
+                        <span class="label-text">Browser</span>
+                    </label>
+                    <label class="selection">
+                        <input type="checkbox">
+                        <span class="label-text">Low end mode*</span>
+                    </label>
+                    <h5>*You can later (un)install these in app store.</h5>
+                    <h5>*Enabling low end mode will disable blur, shadows, and rounded corners.</h5>
+                </div>
+                <span id="nextButton">Next</span>
+
+                <div class="settingsContainer">
+                    <div class="settingsSwitch">
+                        <span class="settings-label">Dock Type<span class="switch-info">?</span></span>
+                        <div class="switch">
+                            <div class="switch-indicator"></div>
+                            <button class="switch-btn active" data-pos="0">Screen Edge</button>
+                            <button class="switch-btn" data-pos="1">Rounded Dock</button>
+                        </div>
+                    </div>
+
+                    <div class="settingsSwitch">
+                        <span class="settings-label">Theme</span>
+                        <div class="switch">
+                            <div class="switch-indicator"></div>
+                            <button class="switch-btn active" data-pos="0">White</button>
+                            <button class="switch-btn" data-pos="1">Black</button>
+                        </div>
+                    </div>
+
+                    <div class="settingsSwitch">
+                        <span class="settings-label">Blur Level</span>
+                        <div class="switch">
+                            <div class="switch-indicator"></div>
+                            <button class="switch-btn active" data-pos="0">None</button>
+                            <button class="switch-btn" data-pos="1">Light</button>
+                            <button class="switch-btn" data-pos="2">Strong</button>
+                        </div>
+                    </div>
+                    <div class="settingsSwitch">
+                        <span class="settings-label">Dock Position</span>
+                        <div class="switch">
+                            <div class="switch-indicator"></div>
+                            <button class="switch-btn active" data-pos="0">Left</button>
+                            <button class="switch-btn" data-pos="1">Middle</button>
+                            <button class="switch-btn" data-pos="2">Right</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="install">
+            <div class="spinner"></div>
+            <p class="installing">Installing</p>
+            <p class="dont-restart">DO NOT RESTART</p>
+        </div>
+    </div>
+</div>

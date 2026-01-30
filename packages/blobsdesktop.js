@@ -40,13 +40,13 @@ SOFTWARE.
 window.blobsdesktop = (() => {
     let killSwitch = false
     let sysTempInfo = {
-        "startMenuOpen":false
+        "startMenuOpen": false
     }
     const version = "1.5.6";
     const processDigitList = {};
     const processArrayList = []
     // Priv Sys Funcs
-    const rebootSystem = async() => {
+    const rebootSystem = async () => {
         await new Promise(resolve => setTimeout(resolve, 1000));
         quantum.document.getElementById("desktop").style.opacity = "0";
         await new Promise(resolve => setTimeout(resolve, 1500));
@@ -76,154 +76,154 @@ window.blobsdesktop = (() => {
     }
     const mainInstaller = async () => {
         try {
-                    await sys.import("quantum");
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                } catch (error) {
-                    await sys.addLine(`Failed to fetch Quantum module! Error: ${error}`);
-                    return;
-                }
-                await sys.addLine("Quantum installed!");
-                const bootConfig = {
-                    path: "/system/modules/quantum.js",
-                    bootpath: "/system/packages/blobsdesktop.js",
-                    bootname: "blobsdesktop",
-                    bootcmd: "boot",
-                    version: version
-                };
-                if (!await internalFS.getFile("/home/downloads")) internalFS.createPath("/home/downloads", "dir", "[]");
-                await internalFS.createPath("/system/env/config.json", "file", JSON.stringify(bootConfig));
-                await sys.addLine("Boot config created!");
-                await sys.addLine("Installing system apps...");
-                const apps = ["Settings.js", "App Store.js", "Calculator.js", "File Manager.js", "Terminal.js", "Processes.js", "Preview.js", "Logs.js"];
-                for (const app of apps) {
-                    await downloadApp(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/${app}`, `/home/applications/${app}`);
-                }
-                await downloadApp(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/Desktop.js`, "/system/coreapplications/.Desktop.js");
+            await sys.import("quantum");
+            await new Promise(resolve => setTimeout(resolve, 100));
+        } catch (error) {
+            await sys.addLine(`Failed to fetch Quantum module! Error: ${error}`);
+            return;
+        }
+        await sys.addLine("Quantum installed!");
+        const bootConfig = {
+            path: "/system/modules/quantum.js",
+            bootpath: "/system/packages/blobsdesktop.js",
+            bootname: "blobsdesktop",
+            bootcmd: "boot",
+            version: version
+        };
+        if (!await internalFS.getFile("/home/downloads")) internalFS.createPath("/home/downloads", "dir", "[]");
+        await internalFS.createPath("/system/env/config.json", "file", JSON.stringify(bootConfig));
+        await sys.addLine("Boot config created!");
+        await sys.addLine("Installing system apps...");
+        const apps = ["Settings.js", "App Store.js", "Calculator.js", "File Manager.js", "Terminal.js", "Processes.js", "Preview.js", "Logs.js"];
+        for (const app of apps) {
+            await downloadApp(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/${app}`, `/home/applications/${app}`);
+        }
+        await downloadApp(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/Desktop.js`, "/system/coreapplications/.Desktop.js");
 
-                if (true) {
-                    await internalFS.createPath("/home/applications/Settings.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`);
-                }
-                
-                if (true) {
-                    await internalFS.createPath("/home/applications/App Store.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>`);
-                }
-                if (true) {
-                    await internalFS.createPath("/system/coreapplications/.Desktop.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>`);
-                }
-                if (!await internalFS.getFile("/system/bootapps")) {
-                    await internalFS.createPath("/system/bootapps", "dir", "[]");
-                }
-                if (true) {
-                    await internalFS.createPath("/home/applications/Calculator.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator-icon lucide-calculator"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>`);
-                }
-                if (true) {
-                    await internalFS.createPath("/home/applications/File Manager.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-closed-icon lucide-folder-closed"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M2 10h20"/></svg>`);
-                }
-                if (true) {
-                    await internalFS.createPath("/home/applications/Terminal.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-terminal-icon lucide-square-terminal"><path d="m7 11 2-2-2-2"/><path d="M11 13h4"/><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/></svg>`);
-                }
-                if (true) {
-                    await internalFS.createPath("/home/applications/Preview.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-icon lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`);
-                }
+        if (true) {
+            await internalFS.createPath("/home/applications/Settings.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`);
+        }
 
-                await sys.addLine("Installing app modules...");
+        if (true) {
+            await internalFS.createPath("/home/applications/App Store.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>`);
+        }
+        if (true) {
+            await internalFS.createPath("/system/coreapplications/.Desktop.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>`);
+        }
+        if (!await internalFS.getFile("/system/bootapps")) {
+            await internalFS.createPath("/system/bootapps", "dir", "[]");
+        }
+        if (true) {
+            await internalFS.createPath("/home/applications/Calculator.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator-icon lucide-calculator"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>`);
+        }
+        if (true) {
+            await internalFS.createPath("/home/applications/File Manager.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-closed-icon lucide-folder-closed"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M2 10h20"/></svg>`);
+        }
+        if (true) {
+            await internalFS.createPath("/home/applications/Terminal.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-terminal-icon lucide-square-terminal"><path d="m7 11 2-2-2-2"/><path d="M11 13h4"/><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/></svg>`);
+        }
+        if (true) {
+            await internalFS.createPath("/home/applications/Preview.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-icon lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`);
+        }
 
-                const response4 = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/blobsAPIModules/contextmenu.js`);
-                if (response4.ok) {
-                    const data = await response4.text();
-                    await internalFS.createPath("/system/env/modules/contextmenu.js", "file", data);
-                }
-                const response5 = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/blobsAPIModules/html.js`);
-                if (response5.ok) {
-                    const data = await response5.text();
-                    await internalFS.createPath("/system/env/modules/html.js", "file", data);
-                }
-                await sys.addLine("[line=blue]Downloading and installing wallpapers...[/line]")
-                const wallpapers = ["Chilly Mountain.png", "Peaceful Landscape.png", "Chaotic Creek.png", "Forest Landscape.png", "Deep Space.jpg"]; // Credits to https://wallpaperaccess.com/real-space-hd-desktop (image #5)
-                for (const wallpaper of wallpapers) {
-                    if (!await internalFS.getFile(`/system/env/wallpapers/${wallpaper}`)) {
-                        await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/Wallpapers/${wallpaper}`, `/system/env/wallpapers/${wallpaper}`);
+        await sys.addLine("Installing app modules...");
+
+        const response4 = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/blobsAPIModules/contextmenu.js`);
+        if (response4.ok) {
+            const data = await response4.text();
+            await internalFS.createPath("/system/env/modules/contextmenu.js", "file", data);
+        }
+        const response5 = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/blobsAPIModules/html.js`);
+        if (response5.ok) {
+            const data = await response5.text();
+            await internalFS.createPath("/system/env/modules/html.js", "file", data);
+        }
+        await sys.addLine("[line=blue]Downloading and installing wallpapers...[/line]")
+        const wallpapers = ["Chilly Mountain.png", "Peaceful Landscape.png", "Chaotic Creek.png", "Forest Landscape.png", "Deep Space.jpg"]; // Credits to https://wallpaperaccess.com/real-space-hd-desktop (image #5)
+        for (const wallpaper of wallpapers) {
+            if (!await internalFS.getFile(`/system/env/wallpapers/${wallpaper}`)) {
+                await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/Wallpapers/${wallpaper}`, `/system/env/wallpapers/${wallpaper}`);
+            }
+            if (!await internalFS.getFile(`/system/env/wallpapers/preview/${wallpaper}`)) {
+                await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/Wallpapers/Preview/${wallpaper}`, `/system/env/wallpapers/preview/${wallpaper}`);
+            }
+        }
+
+        const logoSuccess = await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsLogo.png`, "/system/env/assets/BlobsLogo.png");
+        await sys.addLine("Wallpapers and logo fetched and installed!");
+        sys.addLine("[line=blue]Installing styles...[/line]");
+
+        if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt")) {
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/wallpaperchosen.txt", "file", "/system/env/wallpapers/Chilly Mountain.png")
+        }
+        if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/bgblur.txt")) {
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/bgblur.txt", "file", "3.5")
+        }
+
+        if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/bgopac.txt")) {
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/bgopac.txt", "file", "0.85")
+        }
+
+        if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/dockopac.txt")) {
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/dockopac.txt", "file", "0.7")
+        }
+
+        if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/windowbordercolor.txt")) {
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/windowbordercolor.txt", "file", "#141416ff")
+        }
+
+        if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/dockedTaskbar.txt")) {
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/dockedTaskbar.txt", "file", true)
+        }
+        if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/displaySeconds.txt")) {
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/displaySeconds.txt", "file", false)
+        }
+        const skipStyles = await internalFS.getFile("/system/env/noStyleUpdate.txt");
+        if (!skipStyles) {
+            await internalFS.createPath("/system/env/noStyleUpdate.txt", "file", "false");
+        }
+        let styleDownloadSuccess = true;
+        if (!await internalFS.getFile("/system/env/systemStyles.css")) {
+            styleDownloadSuccess = await new Promise(async (resolve, reject) => {
+                try {
+                    const response = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/Themes/Dark%20Mode.css`);
+                    if (response.ok) {
+                        const text = await response.text();
+                        await internalFS.createPath("/system/env/systemStyles.css", "file", text);
+                        resolve(true);
+                    } else {
+                        console.error("Failed to fetch styles! Response: " + response.status);
+                        resolve(false);
                     }
-                    if (!await internalFS.getFile(`/system/env/wallpapers/preview/${wallpaper}`)) {
-                        await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/Wallpapers/Preview/${wallpaper}`, `/system/env/wallpapers/preview/${wallpaper}`);
-                    }
-                }
+                } catch (e) {
+                    console.error("Error during style download:", e);
+                    reject(e);
 
-                const logoSuccess = await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsLogo.png`, "/system/env/assets/BlobsLogo.png");
-                await sys.addLine("Wallpapers and logo fetched and installed!");
-                sys.addLine("[line=blue]Installing styles...[/line]");
+                }
+            });
+        }
 
-                if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt")) {
-                    await internalFS.createPath("/system/env/systemconfig/settings/customization/wallpaperchosen.txt", "file", "/system/env/wallpapers/Chilly Mountain.png")
-                }
-                if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/bgblur.txt")) {
-                    await internalFS.createPath("/system/env/systemconfig/settings/customization/bgblur.txt", "file", "3.5")
-                }
 
-                if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/bgopac.txt")) {
-                    await internalFS.createPath("/system/env/systemconfig/settings/customization/bgopac.txt", "file", "0.85")
-                }
+        if (styleDownloadSuccess || skipStyles === "true") {
+            await sys.addLine("Styles fetched and installed!")
+            await internalFS.runUnsandboxed(bootConfig.path);
+            await new Promise(resolve => setTimeout(resolve, 500));
 
-                if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/dockopac.txt")) {
-                    await internalFS.createPath("/system/env/systemconfig/settings/customization/dockopac.txt", "file", "0.7")
-                }
+            try {
+                await quantum.init();
+            } catch (e) {
+                if (e.message.includes("ReferenceError:")) return;
 
-                if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/windowbordercolor.txt")) {
-                    await internalFS.createPath("/system/env/systemconfig/settings/customization/windowbordercolor.txt", "file", "#141416ff")
-                }
-                
-                if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/dockedTaskbar.txt")) {
-                    await internalFS.createPath("/system/env/systemconfig/settings/customization/dockedTaskbar.txt", "file", true)
-                }
-                if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/displaySeconds.txt")) {
-                    await internalFS.createPath("/system/env/systemconfig/settings/customization/displaySeconds.txt", "file", false)
-                }
-                const skipStyles = await internalFS.getFile("/system/env/noStyleUpdate.txt");
-                if (!skipStyles) {
-                    await internalFS.createPath("/system/env/noStyleUpdate.txt", "file", "false");
-                }
-                let styleDownloadSuccess = true;
-                if (!await internalFS.getFile("/system/env/systemStyles.css")) {
-                    styleDownloadSuccess = await new Promise(async (resolve, reject) => {
-                        try {
-                            const response = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/Themes/Dark%20Mode.css`);
-                            if (response.ok) {
-                                const text = await response.text();
-                                await internalFS.createPath("/system/env/systemStyles.css", "file", text);
-                                resolve(true);
-                            } else {
-                                console.error("Failed to fetch styles! Response: " + response.status);
-                                resolve(false);
-                            }
-                        } catch (e) {
-                            console.error("Error during style download:", e);
-                            reject(e);
-
-                        }
-                    });
-                }
-                
-
-                if (styleDownloadSuccess || skipStyles === "true") {  
-                    await sys.addLine("Styles fetched and installed!")                
-                    await internalFS.runUnsandboxed(bootConfig.path);
-                    await new Promise(resolve => setTimeout(resolve, 500));
-
-                    try {
-                        await quantum.init();
-                    } catch (e) {
-                        if (e.message.includes("ReferenceError:")) return;
-
-                        console.error(`Failed to initialize Quantum. Error: ${e}`);
-                        return;
-                    }
-                    await importLib("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js");
-                    await sys.addLine("Loading BlobsDesktop...");
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                    createMainGUI();
-                } else {
-                    if (skipStyles === "true") createMainGUI(); else sys.addLine("[line=red]Failed to fetch system styles![/line]");
-                }
+                console.error(`Failed to initialize Quantum. Error: ${e}`);
+                return;
+            }
+            await importLib("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js");
+            await sys.addLine("Loading BlobsDesktop...");
+            await new Promise(resolve => setTimeout(resolve, 100));
+            createMainGUI();
+        } else {
+            if (skipStyles === "true") createMainGUI(); else sys.addLine("[line=red]Failed to fetch system styles![/line]");
+        }
     }
     const createBugAlertWindow = async (app, errorInfo, src) => {
         const container = await createAppContainer(`${app}`);
@@ -243,65 +243,65 @@ window.blobsdesktop = (() => {
     }
 
     const createRoturLoginWindow = async (app) => {
-        return new Promise( async(resolve, reject) => {
-                try {
-                    await new Promise(r => setTimeout(r, 1000));
-                    const result = await new Promise(async(resolve, reject) => {
-                        const win = window.open(`https://rotur.dev/auth?styles=https://origin.mistium.com/Resources/auth.css&return_to=${window.location.origin}/BlobsOS/AuthSuccess`, "_blank");
-                        if (!win) {
-                            console.error("Login window doesn't exist!");
+        return new Promise(async (resolve, reject) => {
+            try {
+                await new Promise(r => setTimeout(r, 1000));
+                const result = await new Promise(async (resolve, reject) => {
+                    const win = window.open(`https://rotur.dev/auth?styles=https://origin.mistium.com/Resources/auth.css&return_to=${window.location.origin}/BlobsOS/AuthSuccess`, "_blank");
+                    if (!win) {
+                        console.error("Login window doesn't exist!");
+                        reject("Fail");
+                    }
+                    const interval = setInterval(() => {
+                        if (win.closed) {
+                            console.error("Login window closed!");
+                            clearInterval(interval);
                             reject("Fail");
                         }
-                        const interval = setInterval(() => {
-                            if (win.closed) {
-                                console.error("Login window closed!");
-                                clearInterval(interval);
-                                reject("Fail");
-                            }
-                        }, 200)
-                        const listener = ev => {
-                            if (ev.origin !== "https://rotur.dev") return;
+                    }, 200)
+                    const listener = ev => {
+                        if (ev.origin !== "https://rotur.dev") return;
 
-                            if (ev.data.type === "rotur-auth-token") {
-                                quantum.document.removeEventListener("message", listener);
-                                clearInterval(interval);
-                                const token = ev.data.token;
+                        if (ev.data.type === "rotur-auth-token") {
+                            quantum.document.removeEventListener("message", listener);
+                            clearInterval(interval);
+                            const token = ev.data.token;
 
-                                win.close();
-                                resolve(token);
-                            }
-                        };
-                        window.addEventListener("message", listener)
-                        
-                    });
-                    if (result === "Fail") {
-                        reject("Fail");
-                        return;
-                    }
-                    resolve(result);
+                            win.close();
+                            resolve(token);
+                        }
+                    };
+                    window.addEventListener("message", listener)
+
+                });
+                if (result === "Fail") {
+                    reject("Fail");
                     return;
-                } catch (error) {
-                    console.error("Login error:", error);
-                    reject(error);
                 }
+                resolve(result);
+                return;
+            } catch (error) {
+                console.error("Login error:", error);
+                reject(error);
+            }
 
         })
-        
+
     }
     const GitHubAPI = (() => {
 
         async function fetchGitHub(credentials, url, method = 'GET', body = null) {
             const githubAuthToken = credentials;
             const headers = {
-            'Accept': 'application/vnd.github.v3+json',
+                'Accept': 'application/vnd.github.v3+json',
             };
             if (githubAuthToken) headers['Authorization'] = `token ${githubAuthToken}`;
             if (body) headers['Content-Type'] = 'application/json';
 
             const response = await fetch(url, {
-            method,
-            headers,
-            body: body ? JSON.stringify(body) : undefined
+                method,
+                headers,
+                body: body ? JSON.stringify(body) : undefined
             });
 
             if (!response.ok) throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
@@ -311,13 +311,13 @@ window.blobsdesktop = (() => {
         async function getRepositoryInfo(credentials, user, repo) {
             const data = await fetchGitHub(credentials, `https://api.github.com/repos/${user}/${repo}`);
             return {
-            name: data.name,
-            description: data.description,
-            owner: data.owner.login,
-            stars: data.stargazers_count,
-            watchers: data.watchers_count,
-            forks: data.forks_count,
-            avatar: data.owner.avatar_url
+                name: data.name,
+                description: data.description,
+                owner: data.owner.login,
+                stars: data.stargazers_count,
+                watchers: data.watchers_count,
+                forks: data.forks_count,
+                avatar: data.owner.avatar_url
             };
         }
 
@@ -335,9 +335,9 @@ window.blobsdesktop = (() => {
             let sha = null;
 
             const body = {
-            message: 'Create file',
-            content: base64,
-            ...(sha ? { sha } : {})
+                message: 'Create file',
+                content: base64,
+                ...(sha ? { sha } : {})
             };
 
             return await fetchGitHub(credentials, url, 'PUT', body);
@@ -348,15 +348,15 @@ window.blobsdesktop = (() => {
             const base64 = btoa(content);
 
             let sha = null;
-            
+
             const existing = await fetchGitHub(credentials, url);
             sha = existing.sha;
-            
+
 
             const body = {
-            message: 'Update file',
-            content: base64,
-            ...(sha ? { sha } : {})
+                message: 'Update file',
+                content: base64,
+                ...(sha ? { sha } : {})
             };
 
             return await fetchGitHub(credentials, url, 'PUT', body);
@@ -366,8 +366,8 @@ window.blobsdesktop = (() => {
             const url = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
             const existing = await fetchGitHub(credentials, url);
             const body = {
-            message: 'Delete file',
-            sha: existing.sha
+                message: 'Delete file',
+                sha: existing.sha
             };
             return await fetchGitHub(credentials, url, 'DELETE', body);
         }
@@ -383,15 +383,15 @@ window.blobsdesktop = (() => {
 
         async function createIssue(credentials, user, repo, title, body) {
             return await fetchGitHub(credentials, `https://api.github.com/repos/${user}/${repo}/issues`, 'POST', {
-            title,
-            body
+                title,
+                body
             });
         }
 
         async function updateIssue(credentials, user, repo, issueNumber, title, body) {
             return await fetchGitHub(credentials, `https://api.github.com/repos/${user}/${repo}/issues/${issueNumber}`, 'PATCH', {
-            title,
-            body
+                title,
+                body
             });
         }
 
@@ -413,15 +413,16 @@ window.blobsdesktop = (() => {
         daemonFunc();
     }
     const induceCrash = async (error) => {
-        const mainDiv = quantum.document.getElementById("termDiv");
-            mainDiv.innerHTML = ""
-            await sys.addLine("## --!--")
-            await sys.addLine("### An unhandled exeption has occurred in BlobsDesktop and the system has been forced to halt.");
-            await sys.addLine(`Error: ${error}`);
-            await sys.addLine("Try updating your packages (such as BlobsDesktop) using the command: \"hpkg update\".");
-            await sys.addLine("If you still have issues, check if you have any custom scripts for BlobsDesktop. If you do, try booting BlobsDesktop without the scripts.");
-            await sys.addLine("If you don't have any custom scripts or the issue is still occurring, please report this issue to me (for example through the HuopaOS or BlobsOS Github).");
-            await sys.addLine("Reboot the system to load into BlobsDesktop or the terminal (hold down \"C\" to load into the terminal).");
+        // const mainDiv = quantum.document.getElementById("termDiv");
+        //     mainDiv.innerHTML = ""
+        console.log("FATAL!")
+        await sys.addLine("## --!--")
+        await sys.addLine("### An unhandled exeption has occurred in BlobsDesktop and the system has been forced to halt.");
+        await sys.addLine(`Error: ${error}`);
+        await sys.addLine("Try updating your packages (such as BlobsDesktop) using the command: \"hpkg update\".");
+        await sys.addLine("If you still have issues, check if you have any custom scripts for BlobsDesktop. If you do, try booting BlobsDesktop without the scripts.");
+        await sys.addLine("If you don't have any custom scripts or the issue is still occurring, please report this issue to me (for example through the HuopaOS or BlobsOS Github).");
+        await sys.addLine("Reboot the system to load into BlobsDesktop or the terminal (hold down \"C\" to load into the terminal).");
     }
     function importStylesheet(content, dataURL = false) {
         const linkElement = quantum.document.createElement('link');
@@ -433,8 +434,8 @@ window.blobsdesktop = (() => {
             const encodedContent = encodeURIComponent(content);
             linkElement.href = `data:text/css;charset=utf-8,${encodedContent}`;
         }
-        
-        
+
+
 
         quantum.document.head.appendChild(linkElement);
 
@@ -442,11 +443,11 @@ window.blobsdesktop = (() => {
     }
     async function importLib(content) {
         return new Promise((resolve, reject) => {
-        const scriptElement = quantum.document.createElement('script');
-        scriptElement.src = content
-        scriptElement.onload = () => resolve();
-        scriptElement.onerror = () => reject(new Error("Failed to load library!"));
-        quantum.document.head.appendChild(scriptElement);
+            const scriptElement = quantum.document.createElement('script');
+            scriptElement.src = content
+            scriptElement.onload = () => resolve();
+            scriptElement.onerror = () => reject(new Error("Failed to load library!"));
+            quantum.document.head.appendChild(scriptElement);
 
         });
     }
@@ -461,7 +462,7 @@ window.blobsdesktop = (() => {
             sys.addLine("Failed to install app!");
             sys.addLine(`Response status: ${response.status}`);
         }
-       
+
     }
     const fetchAndStoreImage = async (url, path) => {
         if (killSwitch) return;
@@ -628,7 +629,7 @@ window.blobsdesktop = (() => {
             console.error("[APP ERROR]: " + error.message, error.stack);
             createBugAlertWindow(appId, error.message, error.stack);
         }
-        
+
     };
 
 
@@ -636,12 +637,12 @@ window.blobsdesktop = (() => {
     const blobsAPI = new Proxy({}, {
         get(target, prop, appName) {
             return (...args) => {
-            if (typeof blobsAPIHandlers[prop] === "function") {
-                blobsAPIHandlers[prop](...args);
-            } else {
-                console.warn(`No handler for blobsAPI method '${prop}'`);
-                createBugAlertWindow(appName, `Error: No handler for blobsAPI method ${prop}`);
-            }
+                if (typeof blobsAPIHandlers[prop] === "function") {
+                    blobsAPIHandlers[prop](...args);
+                } else {
+                    console.warn(`No handler for blobsAPI method '${prop}'`);
+                    createBugAlertWindow(appName, `Error: No handler for blobsAPI method ${prop}`);
+                }
             };
         }
     });
@@ -650,25 +651,25 @@ window.blobsdesktop = (() => {
 
 
     const messageHandler = async (event) => {
-            if (killSwitch) return;
-            const { type, data, id, appName } = event.data || {};
-            if (typeof type !== "string" || !blobsAPI[type]) return;
+        if (killSwitch) return;
+        const { type, data, id, appName } = event.data || {};
+        if (typeof type !== "string" || !blobsAPI[type]) return;
 
-            try {
-                const result = await blobsAPI[type](...(Array.isArray(data) ? data : [data]), appName);
-                if (id) {
-                    event.source?.postMessage({ type: "apiResponse", id, result }, "*");
-                }
-            } catch (err) {
-                if (id) {
-                    event.source?.postMessage({ type: "apiResponse", id, error: err.message }, "*");
-                } else {
-                    createBugAlertWindow(appId, err.message, err.stack);
-                    console.error("[APP ERROR] " + err.message);
-
-                }
+        try {
+            const result = await blobsAPI[type](...(Array.isArray(data) ? data : [data]), appName);
+            if (id) {
+                event.source?.postMessage({ type: "apiResponse", id, result }, "*");
             }
-        };
+        } catch (err) {
+            if (id) {
+                event.source?.postMessage({ type: "apiResponse", id, error: err.message }, "*");
+            } else {
+                createBugAlertWindow(appId, err.message, err.stack);
+                console.error("[APP ERROR] " + err.message);
+
+            }
+        }
+    };
 
 
 
@@ -705,17 +706,17 @@ window.blobsdesktop = (() => {
     const idRegistry = {};
     let elementIdCounter = 0;
     let _returnCallbacks;
-    const runAppWithReturn = async function(path, param) {
+    const runAppWithReturn = async function (path, param) {
         if (!path || typeof path !== "string") {
             throw new Error("runAppWithReturn: invalid path");
         }
         let digits = "";
         for (let i = 0; i < 10; i++) {
-        digits += Math.floor(Math.random() * 10);
+            digits += Math.floor(Math.random() * 10);
         }
         const uid = digits;
         _returnCallbacks ??= {};
-        
+
         _returnCallbacks[uid] = "";
 
         const params = { mode: param, returnId: uid };
@@ -732,45 +733,45 @@ window.blobsdesktop = (() => {
         return data
     };
     const windowList = [];
-    const blobsAPILog = async function(...msg) {
+    const blobsAPILog = async function (...msg) {
         let logs = await internalFS.getFile("/system/env/logs.txt");
         if (!logs) {
             logs = `[LOG: ${new Date()}]: \n${msg.join(", ")}`;
         } else logs += `\n\n[LOG: ${new Date}]: \n${msg.join(", ")}`;
-        
-        await internalFS.createPath("/system/env/logs.txt","file", logs)
+
+        await internalFS.createPath("/system/env/logs.txt", "file", logs)
         console.log(`[LOG: ${Date.now()}]: "${msg.join(", ")}"`);
     }
-    const blobsAPIWarn = async function(...msg) {
+    const blobsAPIWarn = async function (...msg) {
         let logs = await internalFS.getFile("/system/env/logs.txt");
         if (!logs) {
             logs = `[WARN: ${new Date()}]: \n${msg.join(", ")}`;
         } else logs += `\n\n[WARN: ${new Date}]: \n${msg.join(", ")}`;
-        await internalFS.createPath("/system/env/logs.txt","file", logs)
+        await internalFS.createPath("/system/env/logs.txt", "file", logs)
         console.warn(`[WARN: ${Date.now()}]: "${msg.join(", ")}"`);
     }
-    const blobsAPIError = async function(...msg) {
+    const blobsAPIError = async function (...msg) {
         let logs = await internalFS.getFile("/system/env/logs.txt");
         if (!logs) {
             logs = `[ERROR: ${new Date()}: \n${msg.join(", ")}`;
         } else logs += `\n\n[ERROR: ${new Date}]: \n${msg.join(", ")}`;
-        await internalFS.createPath("/system/env/logs.txt","file", logs)
+        await internalFS.createPath("/system/env/logs.txt", "file", logs)
         console.error(`[ERROR: ${Date.now()}]: "${msg.join(", ")}"`);
     }
 
     const blobsAPIHandlers = (appContainer) => {
-        
+
         return {
 
-            log: async function(...msg) {
+            log: async function (...msg) {
                 blobsAPILog(msg)
             },
 
-            error: async function(...msg) {
+            error: async function (...msg) {
                 blobsAPIError(msg)
             },
 
-            warn: async function(...msg) {
+            warn: async function (...msg) {
                 blobsAPIWarn(msg)
             },
 
@@ -778,14 +779,14 @@ window.blobsdesktop = (() => {
 
             clearTimeout,
 
-            getWindowSize: function() {
+            getWindowSize: function () {
                 return {
                     width: appContainer.clientWidth,
                     height: appContainer.clientHeight,
                 };
             },
 
-            getFile: function(path, permissions) {
+            getFile: function (path, permissions) {
                 if (path.startsWith("/system/env/appconfig")) {
                     blobsAPIWarn("[blobsAPI SAFETY]: App tried reading in safeStorage using default read command!");
                     return "[BlobsDesktop FS Security]: No permissions";
@@ -799,11 +800,11 @@ window.blobsdesktop = (() => {
                 return internalFS.getFile(path, permissions);
             },
 
-            deleteFile: function(path, recursive = true, permissions) {
+            deleteFile: function (path, recursive = true, permissions) {
                 if (path.startsWith("/system/env/appconfig")) {
                     blobsAPIWarn("[blobsAPI SAFETY]: App tried deleting file in safeStorage using default delete command!");
                     return "[BlobsDesktop FS Security]: No permissions";
-                }  else if (path === "/system/env/logs.txt") {
+                } else if (path === "/system/env/logs.txt") {
                     const digitId = appContainer.parentElement.id;
                     if (!processDigitList[digitId].elevated) {
                         blobsAPIError("[blobsAPI SAFETY]: App tried deleting file in blocked storage!");
@@ -813,10 +814,10 @@ window.blobsdesktop = (() => {
                 return internalFS.delDir(path, permissions, recursive);
             },
 
-            writeFile: function(path, type, content, permissions = {
-                "read":"",
-                "write":"",
-                "modify":"",
+            writeFile: function (path, type, content, permissions = {
+                "read": "",
+                "write": "",
+                "modify": "",
             }) {
                 const digitId = appContainer.parentElement.id;
                 const blockList = ["/system/packages/blobsdesktop.js", "/system/env/logs.txt"]
@@ -835,7 +836,7 @@ window.blobsdesktop = (() => {
 
 
 
-            openFileImport: async function(accept = "*", type = "auto", allowMultiple = false) {
+            openFileImport: async function (accept = "*", type = "auto", allowMultiple = false) {
                 const files = await new Promise((resolve, reject) => {
                     const input = quantum.document.createElement("input");
                     input.type = "file";
@@ -914,40 +915,40 @@ window.blobsdesktop = (() => {
                     const bstr = atob(arr[1]);
                     let n = bstr.length;
                     const u8arr = new Uint8Array(n);
-                    while(n--){
-                    u8arr[n] = bstr.charCodeAt(n);
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
                     }
-                    return new Blob([u8arr], {type:mime});
+                    return new Blob([u8arr], { type: mime });
                 }
 
                 const blob = dataURLtoBlob(dataURL);
-                
+
                 const bitmap = await createImageBitmap(blob);
-                
+
                 const canvas = quantum.document.createElement('canvas');
                 canvas.width = width;
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(bitmap, 0, 0, width, height);
-                
+
                 return canvas.toDataURL('image/jpeg', quality);
             },
 
-            openRoturLogin: async(appId) => {
+            openRoturLogin: async (appId) => {
                 return await createRoturLoginWindow(appId);
             },
 
-            safeStorageWrite: async(data, appId) => {
-                if (!appId) { blobsAPIWarn("No app ID inputted for SafeStorageWrite. Call cancelled."); return;}
-                await internalFS.createPath("/system/env/appconfig/"+ appId.replace(".js", "") + "/" + data[0], data[1], data[2], `"${appId}"`);
+            safeStorageWrite: async (data, appId) => {
+                if (!appId) { blobsAPIWarn("No app ID inputted for SafeStorageWrite. Call cancelled."); return; }
+                await internalFS.createPath("/system/env/appconfig/" + appId.replace(".js", "") + "/" + data[0], data[1], data[2], `"${appId}"`);
             },
 
-            safeStorageRead: async(path, appId) => {
-                if (!appId) { blobsAPIWarn("No app ID inputted for SafeStorageRead. Call cancelled."); return;}
-                return await internalFS.getFile("/system/env/appconfig/"+ appId.replace(".js", "") + "/" + path);
+            safeStorageRead: async (path, appId) => {
+                if (!appId) { blobsAPIWarn("No app ID inputted for SafeStorageRead. Call cancelled."); return; }
+                return await internalFS.getFile("/system/env/appconfig/" + appId.replace(".js", "") + "/" + path);
             },
 
-            runApp: async(path, startParams, elevated = false) => {
+            runApp: async (path, startParams, elevated = false) => {
                 if (!path || !path.endsWith(".js")) {
                     if (!path) {
                         blobsAPIWarn("No path given for app execution. Request cancelled.");
@@ -965,17 +966,17 @@ window.blobsdesktop = (() => {
                 } else {
                     await runApp(appName, code, path, startParams);
                 }
-                
-                
+
+
             },
- 
+
             openFileDialog: async (allowed) => {
-                    try {
-                        const data = await runAppWithReturn("/home/applications/File Manager.js", "fileSelector");
-                        return data;
-                    } catch (e) {
-                        throw new Error(e);
-                    }
+                try {
+                    const data = await runAppWithReturn("/home/applications/File Manager.js", "fileSelector");
+                    return data;
+                } catch (e) {
+                    throw new Error(e);
+                }
 
             },
 
@@ -1029,8 +1030,8 @@ window.blobsdesktop = (() => {
                     blobsAPIWarn(`getRenderedSize: Invalid type '${type}'`);
                     return;
                 }
-                            
-                
+
+
             },
 
             hideWindow: () => {
@@ -1046,7 +1047,7 @@ window.blobsdesktop = (() => {
                 const appToDock = quantum.document.querySelector(`[data-dock-digit-id="${digitId}"]`);
                 appToDock.style.display = "block";
             },
-            
+
             createNotification: async (title, content) => {
                 const notifEl = quantum.document.createElement("div");
                 notifEl.style = "border-radius: 0.5em; width: 20em; position: absolute; top: 0.5em; right: -22em; transition: right ease 1s; z-index: 99999;";
@@ -1067,9 +1068,9 @@ window.blobsdesktop = (() => {
                 notifEl.style.right = "-22em";
                 await new Promise(resolve => setTimeout(resolve, 1500));
                 await notifEl.remove();
-                
+
             },
- 
+
             calculate: (expression, scope = {}) => {
                 try {
                     const result = math.evaluate(expression, scope);
@@ -1078,7 +1079,7 @@ window.blobsdesktop = (() => {
                     blobsAPIError(`calculate: '${error}'`);
                     return;
                 }
-                
+
             },
 
             parseMarkdown: (html) => {
@@ -1091,7 +1092,7 @@ window.blobsdesktop = (() => {
                 }
             },
 
-            getSystemInfo: async() => {
+            getSystemInfo: async () => {
                 async function getBrowserName() {
                     const ua = navigator.userAgent;
 
@@ -1112,13 +1113,13 @@ window.blobsdesktop = (() => {
                 const browser = await getBrowserName()
                 const battery = await navigator.getBattery();
                 const systemInfo = {
-                version: version,
-                bootTime: quantum.bootTime,
-                battery: battery.level,
-                host: navigator.userAgentData?.platform ?? "Unknown",
-                browser
+                    version: version,
+                    bootTime: quantum.bootTime,
+                    battery: battery.level,
+                    host: navigator.userAgentData?.platform ?? "Unknown",
+                    browser
                 };
-                
+
                 return JSON.stringify(systemInfo);
             },
 
@@ -1132,7 +1133,7 @@ window.blobsdesktop = (() => {
             github_deleteFile: (credentials, user, repo, path) => {
                 GitHubAPI.deleteFile(credentials, user, repo, path)
             },
-            github_getFile: async(credentials, user, repo, branch, path) => {
+            github_getFile: async (credentials, user, repo, branch, path) => {
                 const result = await GitHubAPI.getFile(credentials, user, repo, branch, path);
                 return result;
             },
@@ -1166,18 +1167,18 @@ window.blobsdesktop = (() => {
                 if (def) input.value = def;
                 popup.append(title, input);
                 appContainer.append(popup);
-                return new Promise(async(resolve, reject) => {
+                return new Promise(async (resolve, reject) => {
                     input.addEventListener("keydown", (e) => {
                         if (e?.key === "Enter") {
                             if (input.value) {
                                 popup.remove();
                                 resolve(input.value)
                             }
-                            
+
                         }
                     })
                 })
-                
+
             },
 
             removeTitlebar: () => {
@@ -1402,83 +1403,83 @@ window.blobsdesktop = (() => {
                 });
             },
 
-            clipboardWrite: async(content) => {
+            clipboardWrite: async (content) => {
                 await navigator.clipboard.writeText(content)
             },
 
-            clipboardRead: async() => {
+            clipboardRead: async () => {
                 return await navigator.clipboard.readText()
             },
 
             requestPermission: (perm) => {
                 return new Promise((resolve) => {
-                const popup = quantum.document.createElement("div");
-                popup.style = "position: absolute; left: 0; top: 0; width: 100%; height: 100%;";
-                popup.classList.add("popup")
-                const accept = quantum.document.createElement("button");
-                const decline = quantum.document.createElement("button");
-                const title = quantum.document.createElement("h2");
-                const subtitle = quantum.document.createElement("h3");
-                title.style = "margin: 1em auto; display: block; text-align: center;";
-                subtitle.style = "margin: 1em auto; display: block; text-align: center;";
-                accept.style = "margin: 0.5em auto; display: block; width: 50%";
-                accept.textContent = "Approve";
-                decline.style = "margin: 0.5em auto; display: block; width: 50%";
-                decline.textContent = "Reject";
-                popup.append(title, subtitle, accept, decline);
-                appContainer.append(popup);
-                switch (perm) {
-                    case "unsandboxed":{
-                        title.textContent = "UNSANDBOXED WINDOW REQUEST";
-                        subtitle.style.maxWidth = "90%";
-                        subtitle.textContent = "THE APP REQUESTED REMOVE THE APP SANDBOX FOR THIS PROCESS. THIS IS AN EXTREMELY DANGEROUS PERMISSION TO GRANT AND CAN CAUSE YOUR DATA IN OTHER APPS TO BE STOLEN AND FOR THE APP TO HIJACK BLOBSOS!!!";
-                        accept.textContent = "Approve (may have disastrous consequences)";
-                        decline.textContent = "Reject and go back to safety";
-                        decline.onclick = () => {
+                    const popup = quantum.document.createElement("div");
+                    popup.style = "position: absolute; left: 0; top: 0; width: 100%; height: 100%;";
+                    popup.classList.add("popup")
+                    const accept = quantum.document.createElement("button");
+                    const decline = quantum.document.createElement("button");
+                    const title = quantum.document.createElement("h2");
+                    const subtitle = quantum.document.createElement("h3");
+                    title.style = "margin: 1em auto; display: block; text-align: center;";
+                    subtitle.style = "margin: 1em auto; display: block; text-align: center;";
+                    accept.style = "margin: 0.5em auto; display: block; width: 50%";
+                    accept.textContent = "Approve";
+                    decline.style = "margin: 0.5em auto; display: block; width: 50%";
+                    decline.textContent = "Reject";
+                    popup.append(title, subtitle, accept, decline);
+                    appContainer.append(popup);
+                    switch (perm) {
+                        case "unsandboxed": {
+                            title.textContent = "UNSANDBOXED WINDOW REQUEST";
+                            subtitle.style.maxWidth = "90%";
+                            subtitle.textContent = "THE APP REQUESTED REMOVE THE APP SANDBOX FOR THIS PROCESS. THIS IS AN EXTREMELY DANGEROUS PERMISSION TO GRANT AND CAN CAUSE YOUR DATA IN OTHER APPS TO BE STOLEN AND FOR THE APP TO HIJACK BLOBSOS!!!";
+                            accept.textContent = "Approve (may have disastrous consequences)";
+                            decline.textContent = "Reject and go back to safety";
+                            decline.onclick = () => {
+                                popup.remove();
+                                resolve(false);
+                            }
+                            accept.onclick = () => {
+                                popup.remove();
+                                appContainer.children[1].removeAttribute("sandbox") // VERY DANGEROUS !!!!
+                                resolve(true);
+                            }
+                            break;
+                        }
+                        case "modals": {
+                            title.textContent = "Modal permisssions";
+                            subtitle.textContent = "This app requests access to browser modals (popups).";
+                            decline.onclick = () => {
+                                popup.remove();
+                                resolve(false);
+                            }
+                            accept.onclick = () => {
+                                popup.remove();
+                                appContainer.children[1].sandbox = appContainer.sandbox + " allow-modals"
+                                resolve(true);
+                            }
+                            break;
+                        }
+                        case "forms": {
+                            title.textContent = "Form permisssions";
+                            subtitle.textContent = "This app requests access to forms, certain forms may redirect you from BlobsOS to another website.";
+                            decline.onclick = () => {
+                                popup.remove();
+                                resolve(false);
+                            }
+                            accept.onclick = () => {
+                                popup.remove();
+                                appContainer.children[1].sandbox = appContainer.sandbox + " allow-forms"
+                                resolve(true);
+                            }
+                            break;
+                        }
+                        default: {
                             popup.remove();
                             resolve(false);
+                            break;
                         }
-                        accept.onclick = () => {
-                            popup.remove();
-                            appContainer.children[1].removeAttribute("sandbox") // VERY DANGEROUS !!!!
-                            resolve(true);
-                        }
-                        break;
                     }
-                    case "modals":{
-                        title.textContent = "Modal permisssions";
-                        subtitle.textContent = "This app requests access to browser modals (popups).";
-                        decline.onclick = () => {
-                            popup.remove();
-                            resolve(false);
-                        }
-                        accept.onclick = () => {
-                            popup.remove();
-                            appContainer.children[1].sandbox = appContainer.sandbox + " allow-modals"
-                            resolve(true);
-                        }
-                        break;
-                    }
-                    case "forms":{
-                        title.textContent = "Form permisssions";
-                        subtitle.textContent = "This app requests access to forms, certain forms may redirect you from BlobsOS to another website.";
-                        decline.onclick = () => {
-                            popup.remove();
-                            resolve(false);
-                        }
-                        accept.onclick = () => {
-                            popup.remove();
-                            appContainer.children[1].sandbox = appContainer.sandbox + " allow-forms"
-                            resolve(true);
-                        }
-                        break;
-                    }
-                    default:{
-                        popup.remove();
-                        resolve(false);
-                        break;
-                    }
-                }
                 });
             },
 
@@ -1487,7 +1488,7 @@ window.blobsdesktop = (() => {
                 internalFS.createPath("/system/applicationStorage/" + appId.replace(".js", "") + "/" + data[0], data[1], data[2]);
             },
 
-            applicationStorageRead: async(data, appId) => {
+            applicationStorageRead: async (data, appId) => {
                 const returnData = await internalFS.getFile("/system/applicationStorage/" + appId.replace(".js", "") + "/" + data[0]);
                 return returnData;
             }
@@ -1500,7 +1501,7 @@ window.blobsdesktop = (() => {
         if (!event.source || !blobsAPIMap.has(event.source)) {
             return;
         }
-        const { type, data, id, appId} = event.data || {};
+        const { type, data, id, appId } = event.data || {};
         if (event.data?.type === "iframeError") {
             console.error("[APP ERROR]:", event.data);
             console.log(event.data);
@@ -1520,18 +1521,18 @@ window.blobsdesktop = (() => {
             let result;
             if (type === "openRoturLogin") {
                 result = await blobsAPI[type]([event.data.appName]);
-            } else if (type === "safeStorageWrite" || type === "applicationStorageWrite") {  
+            } else if (type === "safeStorageWrite" || type === "applicationStorageWrite") {
 
                 result = await blobsAPI[type]((Array.isArray(data) ? data : [data].splice(3)), event.data.appName);
 
-            } else if (type === "safeStorageRead" || type === "applicationStorageRead"){
+            } else if (type === "safeStorageRead" || type === "applicationStorageRead") {
 
                 result = await blobsAPI[type](Array.isArray(data) ? data : data[0], event.data.appName);
 
             } else {
                 result = await blobsAPI[type](...(Array.isArray(data) ? data : [data]));
             }
-            
+
             if (id) {
                 event.source?.postMessage({ type: "apiResponse", id, result }, "*");
             }
@@ -1548,7 +1549,7 @@ window.blobsdesktop = (() => {
     const createDraggableWindow = (windowEl, dragHandleSelector = ".titlebar") => {
         let skipFirstMouseMove = true;
         windowEl.style.position = "absolute";
-        
+
         const dragHandle = windowEl.querySelector(dragHandleSelector);
         if (!dragHandle) return;
 
@@ -1592,7 +1593,7 @@ window.blobsdesktop = (() => {
                 skipFirstMouseMove = false;
                 return;
             }
-            
+
             const x = e.clientX - offsetX;
             const y = e.clientY - offsetY;
             windowEl.style.left = x + "px";
@@ -1643,14 +1644,14 @@ window.blobsdesktop = (() => {
             let newHeight = startRect.height;
             let newLeft = startRect.left;
             let newTop = startRect.top;
-            
+
             if (dir.includes("right")) {
                 if (startRect.width + dx < maxWidth) {
                     newWidth = Math.max(minWidth, startRect.width + dx);
                 } else {
                     newWidth = Math.max(minWidth, maxWidth);
                 }
-               
+
             }
 
             if (dir.includes("bottom")) {
@@ -1723,14 +1724,14 @@ window.blobsdesktop = (() => {
         outerContainer.style.backdropFilter = `blur(${blur}px)`;
 
         const resizers = [
-            { dir: 'top',    cursor: 'ns-resize',   style: { top: '-2px', left: '0', width: '100%', height: '5px' }},
-            { dir: 'right',  cursor: 'ew-resize',   style: { top: '0', right: '-2px', width: '5px', height: '100%' }},
-            { dir: 'bottom', cursor: 'ns-resize',   style: { bottom: '-2px', left: '0', width: '100%', height: '5px' }},
-            { dir: 'left',   cursor: 'ew-resize',   style: { top: '0', left: '-2px', width: '5px', height: '100%' }},
-            { dir: 'top-left',     cursor: 'nwse-resize', style: { top: '-2px', left: '-2px', width: '8px', height: '8px' }},
-            { dir: 'top-right',    cursor: 'nesw-resize', style: { top: '-2px', right: '-2px', width: '8px', height: '8px' }},
-            { dir: 'bottom-left',  cursor: 'nesw-resize', style: { bottom: '-2px', left: '-2px', width: '8px', height: '8px' }},
-            { dir: 'bottom-right', cursor: 'nwse-resize', style: { bottom: '-2px', right: '-2px', width: '8px', height: '8px' }},
+            { dir: 'top', cursor: 'ns-resize', style: { top: '-2px', left: '0', width: '100%', height: '5px' } },
+            { dir: 'right', cursor: 'ew-resize', style: { top: '0', right: '-2px', width: '5px', height: '100%' } },
+            { dir: 'bottom', cursor: 'ns-resize', style: { bottom: '-2px', left: '0', width: '100%', height: '5px' } },
+            { dir: 'left', cursor: 'ew-resize', style: { top: '0', left: '-2px', width: '5px', height: '100%' } },
+            { dir: 'top-left', cursor: 'nwse-resize', style: { top: '-2px', left: '-2px', width: '8px', height: '8px' } },
+            { dir: 'top-right', cursor: 'nesw-resize', style: { top: '-2px', right: '-2px', width: '8px', height: '8px' } },
+            { dir: 'bottom-left', cursor: 'nesw-resize', style: { bottom: '-2px', left: '-2px', width: '8px', height: '8px' } },
+            { dir: 'bottom-right', cursor: 'nwse-resize', style: { bottom: '-2px', right: '-2px', width: '8px', height: '8px' } },
         ];
         if (extra !== "core") {
             for (const r of resizers) {
@@ -1745,7 +1746,7 @@ window.blobsdesktop = (() => {
                 outerContainer.appendChild(el);
 
                 el.addEventListener("mousedown", onResizeStart);
-            }         
+            }
         }
         const titleBar = quantum.document.createElement("div");
         titleBar.style = `
@@ -1808,7 +1809,7 @@ window.blobsdesktop = (() => {
         if (extra === "elevated") {
             elevated = true;
         }
-        processDigitList[digits] = {elevated:elevated, name:appId, id:digits, title:appId, extra:extra, hidden:false, minWidth:375, minHeight:42, maxWidth:10000, maxHeight:10000,config:[]};
+        processDigitList[digits] = { elevated: elevated, name: appId, id: digits, title: appId, extra: extra, hidden: false, minWidth: 375, minHeight: 42, maxWidth: 10000, maxHeight: 10000, config: [] };
         await createSysDaemon("appContBordUpdater", () => {
             const loop = async () => {
                 const override = quantum.document.querySelector(`[data-border-override="${digits}"]`);
@@ -1816,17 +1817,17 @@ window.blobsdesktop = (() => {
                     const borderColor = await internalFS.getFile("/system/env/systemconfig/settings/customization/windowbordercolor.txt");
                     outerContainer.style.borderColor = borderColor;
                 }
-                
+
                 setTimeout(loop, 200);
             }
             loop()
-            
+
         })
         appToDock.append(appToDockImg);
         appToDock.dataset.dockDigitId = digits;
         if (extra !== "core") {
             appBar.append(appToDock);
-            appToDock.onclick = async() => {
+            appToDock.onclick = async () => {
                 appZIndex = appZIndex + 10;
                 outerContainer.focus({ preventScroll: true });
                 if (outerContainer.style.display === "block") {
@@ -1836,11 +1837,11 @@ window.blobsdesktop = (() => {
                     processDigitList[digits].hidden = false;
                     outerContainer.style.display = "block";
                 }
-                
+
                 outerContainer.style.zIndex = appZIndex;
             }
         }
-       
+
         closeButton.addEventListener("click", () => {
             const i = processArrayList.indexOf(digits);
             if (i !== -1) processArrayList.splice(i, 1);
@@ -1882,7 +1883,7 @@ window.blobsdesktop = (() => {
         if (extra !== "core") {
             createDraggableWindow(outerContainer);
         }
-        outerContainer.addEventListener("keydown", async(e) => {
+        outerContainer.addEventListener("keydown", async (e) => {
             if (Number(outerContainer.style.zIndex) !== appZIndex) {
                 return;
             }
@@ -1901,10 +1902,10 @@ window.blobsdesktop = (() => {
                     } else {
                         outerContainer.style.height = `calc(100% - 7em)`;
                     }
-                    
-                   
+
+
                     break;
-                
+
                 case "ArrowRight":
                     e.preventDefault()
                     outerContainer.style.left = "";
@@ -1918,7 +1919,7 @@ window.blobsdesktop = (() => {
                         outerContainer.style.height = `calc(100% - 7em)`;
                     }
                     break;
-               
+
                 case "ArrowUp":
                     e.preventDefault()
                     outerContainer.style.left = "0";
@@ -1928,7 +1929,7 @@ window.blobsdesktop = (() => {
                     outerContainer.style.width = "calc(100% - 4px)";
                     outerContainer.style.height = `calc(50% - 3em - 3px)`;
                     break;
-                
+
                 case "ArrowDown":
                     e.preventDefault()
                     outerContainer.style.left = "0";
@@ -1974,127 +1975,127 @@ window.blobsdesktop = (() => {
                     }
                     break;
             }
-        }) 
+        })
 
-        
+
         requestAnimationFrame(() => {
             outerContainer.style.opacity = "1";
             outerContainer.style.transform = "translateY(0px)";
         });
 
         return container;
-        
+
     }
     let docked;
 
     const openStartMenu = async () => {
         if (killSwitch) return;
         try {
-            
-        
-        if (!sysTempInfo.startMenuOpen) {
 
-            let startMenuDiv = quantum.document.getElementById("startMenuDiv");
-            const desktop = quantum.document.getElementById("desktop");
-            const mainDiv = quantum.document.getElementById("termDiv");
-            sysTempInfo.startMenuOpen = "half";
-            if (!startMenuDiv) {
-                startMenuDiv = quantum.document.createElement("div");
-                startMenuDiv.id = "startMenuDiv";
-                if (docked) {
-                    startMenuDiv.style.left = "1.5%";
-                    startMenuDiv.style.bottom = "5em";
+
+            if (!sysTempInfo.startMenuOpen) {
+
+                let startMenuDiv = quantum.document.getElementById("startMenuDiv");
+                const desktop = quantum.document.getElementById("desktop");
+                const mainDiv = quantum.document.getElementById("termDiv");
+                sysTempInfo.startMenuOpen = "half";
+                if (!startMenuDiv) {
+                    startMenuDiv = quantum.document.createElement("div");
+                    startMenuDiv.id = "startMenuDiv";
+                    if (docked) {
+                        startMenuDiv.style.left = "1.5%";
+                        startMenuDiv.style.bottom = "5em";
+                    }
+                    desktop.append(startMenuDiv);
                 }
-                desktop.append(startMenuDiv);
-            }
-            const blur = await internalFS.getFile("/system/env/systemconfig/settings/customization/bgblur.txt");
-            startMenuDiv.style.display = "block";
-            startMenuDiv.style.backdropFilter = `blur(${blur}px)`;
-            const shutdownButton = quantum.document.createElement("button");
-            shutdownButton.style = "background-color: transparent; border-color: rgba(105, 105, 105, 0.6); border-style: solid; border-radius: 0.5em; position: absolute; cursor: pointer; right: 0.5em; bottom: 0.5em; padding: 0.5em;"
-            shutdownButton.textContent = "Shutdown";
-            shutdownButton.onclick = async () => {
-                const newWin = open(location, '_self');
-                newWin.close();
-            }
-            startMenuDiv.append(shutdownButton);
-            let appList = JSON.parse(await internalFS.getFile("/home/applications") || "[]");
+                const blur = await internalFS.getFile("/system/env/systemconfig/settings/customization/bgblur.txt");
+                startMenuDiv.style.display = "block";
+                startMenuDiv.style.backdropFilter = `blur(${blur}px)`;
+                const shutdownButton = quantum.document.createElement("button");
+                shutdownButton.style = "background-color: transparent; border-color: rgba(105, 105, 105, 0.6); border-style: solid; border-radius: 0.5em; position: absolute; cursor: pointer; right: 0.5em; bottom: 0.5em; padding: 0.5em;"
+                shutdownButton.textContent = "Shutdown";
+                shutdownButton.onclick = async () => {
+                    const newWin = open(location, '_self');
+                    newWin.close();
+                }
+                startMenuDiv.append(shutdownButton);
+                let appList = JSON.parse(await internalFS.getFile("/home/applications") || "[]");
 
-            if (!appList) {
-                console.warn("/home/applications does not exist. Creating...");
-                internalFS.createPath("/home/applications");
-                return;
-            }
-            const appText = quantum.document.createElement("h2");
-            appText.textContent = "Your apps";
-            appText.style = "margin: 0.5em; text-align: left; font-family: 'Figtree', sans-serif;"
-            startMenuDiv.append(appText);
-            if (appList.length < 1) {
-                const noAppsText = quantum.document.createElement("p");
-                noAppsText.textContent = "You don't seem to have any apps installed right now!";
-                noAppsText.style = "margin: 0.7em; max-width: 17em; text-align: left; font-family: sans-serif;"
-                startMenuDiv.append(noAppsText);
-            }
-            const appListDiv = quantum.document.createElement("div");
-            appListDiv.style = "height: 18em; overflow: auto; position: relative; overflow-x: hidden;"
-            startMenuDiv.append(appListDiv);
-            for (let i = 0; i < appList.length; i++) {
-                if (appList[i].endsWith(".js") && !appList[i].startsWith(".")) {
-                    const appButton = quantum.document.createElement("button");
-                    const cleanedAppName = appList[i].replace("/home/applications/", "");
-                    const appTitle = quantum.document.createElement("p");
-                    appTitle.textContent = cleanedAppName.replace(/\.js$/, "");
-                    appButton.style = "background-color: transparent; border-color: rgba(105, 105, 105, 0.6); border-style: solid; border-radius: 0.5em; padding: 0.5em; width: 466px; height: 3em; margin: 0.2em 0.5em; text-align: left; cursor: pointer; display: flex; flex-wrap: wrap; align-content: flex-start;"
-                    const appIcon = quantum.document.createElement("img");
-                    appIcon.draggable = "false";
-                    appIcon.style = "display: inline; padding-right: 0.2em; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;"
-                    appTitle.style = "display: inline;"
-                    const appIconSrc = await internalFS.getFile(appList[i] + ".icon");
-                    if (!appIconSrc) {
-                        const defaultSVG = `
+                if (!appList) {
+                    console.warn("/home/applications does not exist. Creating...");
+                    internalFS.createPath("/home/applications");
+                    return;
+                }
+                const appText = quantum.document.createElement("h2");
+                appText.textContent = "Your apps";
+                appText.style = "margin: 0.5em; text-align: left; font-family: 'Figtree', sans-serif;"
+                startMenuDiv.append(appText);
+                if (appList.length < 1) {
+                    const noAppsText = quantum.document.createElement("p");
+                    noAppsText.textContent = "You don't seem to have any apps installed right now!";
+                    noAppsText.style = "margin: 0.7em; max-width: 17em; text-align: left; font-family: sans-serif;"
+                    startMenuDiv.append(noAppsText);
+                }
+                const appListDiv = quantum.document.createElement("div");
+                appListDiv.style = "height: 18em; overflow: auto; position: relative; overflow-x: hidden;"
+                startMenuDiv.append(appListDiv);
+                for (let i = 0; i < appList.length; i++) {
+                    if (appList[i].endsWith(".js") && !appList[i].startsWith(".")) {
+                        const appButton = quantum.document.createElement("button");
+                        const cleanedAppName = appList[i].replace("/home/applications/", "");
+                        const appTitle = quantum.document.createElement("p");
+                        appTitle.textContent = cleanedAppName.replace(/\.js$/, "");
+                        appButton.style = "background-color: transparent; border-color: rgba(105, 105, 105, 0.6); border-style: solid; border-radius: 0.5em; padding: 0.5em; width: 466px; height: 3em; margin: 0.2em 0.5em; text-align: left; cursor: pointer; display: flex; flex-wrap: wrap; align-content: flex-start;"
+                        const appIcon = quantum.document.createElement("img");
+                        appIcon.draggable = "false";
+                        appIcon.style = "display: inline; padding-right: 0.2em; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;"
+                        appTitle.style = "display: inline;"
+                        const appIconSrc = await internalFS.getFile(appList[i] + ".icon");
+                        if (!appIconSrc) {
+                            const defaultSVG = `
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-code-icon lucide-file-code"><path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/></svg>
                         `;
-                        svgToCorrectColor(appIcon, `data:image/svg+xml;utf8,${encodeURIComponent(defaultSVG)}`)
-                    } else {
-                        svgToCorrectColor(appIcon, `data:image/svg+xml;utf8,${encodeURIComponent(appIconSrc)}`)
+                            svgToCorrectColor(appIcon, `data:image/svg+xml;utf8,${encodeURIComponent(defaultSVG)}`)
+                        } else {
+                            svgToCorrectColor(appIcon, `data:image/svg+xml;utf8,${encodeURIComponent(appIconSrc)}`)
+                        }
+                        appButton.onclick = async () => {
+                            const code = await internalFS.getFile(appList[i]);
+                            await runApp(cleanedAppName, code, appList[i]);
+                            await openStartMenu()
+                        };
+                        appButton.append(appIcon);
+                        appButton.append(appTitle);
+                        appListDiv.append(appButton);
                     }
-                    appButton.onclick = async () => {
-                        const code = await internalFS.getFile(appList[i]);
-                        await runApp(cleanedAppName, code, appList[i]);
-                        await openStartMenu()
-                    };
-                    appButton.append(appIcon);
-                    appButton.append(appTitle);
-                    appListDiv.append(appButton);
                 }
-            }
-            requestAnimationFrame(() => {
-                startMenuDiv.style.opacity = "1";
-                startMenuDiv.style.transform = "translateY(0)";
-            });
+                requestAnimationFrame(() => {
+                    startMenuDiv.style.opacity = "1";
+                    startMenuDiv.style.transform = "translateY(0)";
+                });
 
-            setTimeout(() => {
-                sysTempInfo.startMenuOpen = true;
-            }, 300);
-
-
-        } else if (sysTempInfo.startMenuOpen === true){
-            sysTempInfo.startMenuOpen = "half";
-            const startMenuDiv = quantum.document.getElementById("startMenuDiv");
-
-            requestAnimationFrame(() => {
-                startMenuDiv.style.opacity = "0";
-                startMenuDiv.style.transform = "translateY(20px)";
-            });
-            setTimeout(() => {
-                startMenuDiv.innerHTML = "";
-                startMenuDiv.style.display = "none";
                 setTimeout(() => {
-                    sysTempInfo.startMenuOpen = false;
-                }, 50);
-            }, 300);
-        
-        }
+                    sysTempInfo.startMenuOpen = true;
+                }, 300);
+
+
+            } else if (sysTempInfo.startMenuOpen === true) {
+                sysTempInfo.startMenuOpen = "half";
+                const startMenuDiv = quantum.document.getElementById("startMenuDiv");
+
+                requestAnimationFrame(() => {
+                    startMenuDiv.style.opacity = "0";
+                    startMenuDiv.style.transform = "translateY(20px)";
+                });
+                setTimeout(() => {
+                    startMenuDiv.innerHTML = "";
+                    startMenuDiv.style.display = "none";
+                    setTimeout(() => {
+                        sysTempInfo.startMenuOpen = false;
+                    }, 50);
+                }, 300);
+
+            }
         } catch (error) {
             induceCrash(error);
         }
@@ -2131,7 +2132,7 @@ window.blobsdesktop = (() => {
             } else {
                 desktop.style = `width: 100%; height: 100%; background-image: url(${imageData}); background-size: cover; background-position: center; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
             }
-            
+
             quantum.document.body.style.userSelect = "none";
             desktop.id = "desktop";
             mainDiv.append(desktop);
@@ -2147,26 +2148,26 @@ window.blobsdesktop = (() => {
                         const imageData = URL.createObjectURL(blob);
                         desktop.style.opacity = "0";
                         setTimeout(async () => {
-                        const wallpaperExt = wallpaperChosen.split(".").pop()
-                        const oldVid = quantum.document.getElementById("wallpaperVideo");
-                        if (oldVid) oldVid.remove();
-                        if (wallpaperExt === "mp4") {
-                            const video = quantum.document.createElement("video");
-                            video.src = imageData;
-                            video.id = "wallpaperVideo";
-                            video.autoplay = true;
-                            video.muted = true;
-                            video.loop = true;
-                            video.playsInline = true;
-                            video.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;";
-                            desktop.append(video);
-                            desktop.style = `width: 100%; height: 100%; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
-                        } else {
-                            desktop.style = `width: 100%; height: 100%; background-image: url(${imageData}); background-size: cover; background-position: center; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
-                        }
-                        setTimeout(async () => {
-                            desktop.style.opacity = "1";
-                        }, 250)
+                            const wallpaperExt = wallpaperChosen.split(".").pop()
+                            const oldVid = quantum.document.getElementById("wallpaperVideo");
+                            if (oldVid) oldVid.remove();
+                            if (wallpaperExt === "mp4") {
+                                const video = quantum.document.createElement("video");
+                                video.src = imageData;
+                                video.id = "wallpaperVideo";
+                                video.autoplay = true;
+                                video.muted = true;
+                                video.loop = true;
+                                video.playsInline = true;
+                                video.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;";
+                                desktop.append(video);
+                                desktop.style = `width: 100%; height: 100%; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
+                            } else {
+                                desktop.style = `width: 100%; height: 100%; background-image: url(${imageData}); background-size: cover; background-position: center; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
+                            }
+                            setTimeout(async () => {
+                                desktop.style.opacity = "1";
+                            }, 250)
                         }, 200)
 
                     }
@@ -2209,8 +2210,8 @@ window.blobsdesktop = (() => {
                 dock.style.width = "100%";
                 dock.style.bottom = "0";
                 dock.style.border = "";
-                dock.style.borderStyle = "none";  
-                dock.style.borderTop = "rgba(65, 65, 65, 0.65) 1.5px solid";   
+                dock.style.borderStyle = "none";
+                dock.style.borderTop = "rgba(65, 65, 65, 0.65) 1.5px solid";
                 dock.style.borderRadius = "0";
 
             }
@@ -2239,9 +2240,9 @@ window.blobsdesktop = (() => {
 
                 const loop = () => {
                     const now = new Date();
-                    if (internalFS.getFile("/system/env/systemconfig/settings/customization/displaySeconds.txt")){
+                    if (internalFS.getFile("/system/env/systemconfig/settings/customization/displaySeconds.txt")) {
                         clockCurrentTime.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-                    }else{
+                    } else {
                         clockCurrentTime.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}`
                     }
 
@@ -2274,26 +2275,26 @@ window.blobsdesktop = (() => {
                 const batteryText = quantum.document.createElement("p");
                 const batteryIcon = quantum.document.createElement("img");
                 createSysDaemon("batteryUpdate", () => {
-                    const loop = async() => {
+                    const loop = async () => {
                         const battery = await navigator.getBattery()
                         const batteryLevel = Math.round(battery.level * 100);
                         batteryText.textContent = batteryLevel + "%";
                         let icon;
                         if (battery.charging) {
                             icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-battery-charging-icon lucide-battery-charging"><path d="m11 7-3 5h4l-3 5"/><path d="M14.856 6H16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.935"/><path d="M22 14v-4"/><path d="M5.14 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2.936"/></svg>`;
-                            
+
                         } else {
                             if (batteryLevel > 66) {
                                 icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-battery-full-icon lucide-battery-full"><path d="M10 10v4"/><path d="M14 10v4"/><path d="M22 14v-4"/><path d="M6 10v4"/><rect x="2" y="6" width="16" height="12" rx="2"/></svg>`;
                             } else if (batteryLevel > 33) {
                                 icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-battery-medium-icon lucide-battery-medium"><path d="M10 14v-4"/><path d="M22 14v-4"/><path d="M6 14v-4"/><rect x="2" y="6" width="16" height="12" rx="2"/></svg>`
                             } else if (batteryLevel > 5) {
-                               icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-battery-low-icon lucide-battery-low"><path d="M22 14v-4"/><path d="M6 14v-4"/><rect x="2" y="6" width="16" height="12" rx="2"/></svg>`;
+                                icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-battery-low-icon lucide-battery-low"><path d="M22 14v-4"/><path d="M6 14v-4"/><rect x="2" y="6" width="16" height="12" rx="2"/></svg>`;
                             } else {
                                 icon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-battery-icon lucide-battery"><path d="M 22 14 L 22 10"/><rect x="2" y="6" width="16" height="12" rx="2"/></svg>`
                             }
                         }
-                        svgToCorrectColor(batteryIcon, `data:image/svg+xml;utf8,${encodeURIComponent(icon)}`)                        
+                        svgToCorrectColor(batteryIcon, `data:image/svg+xml;utf8,${encodeURIComponent(icon)}`)
                         setTimeout(loop, 1000);
                     }
                     loop()
@@ -2308,7 +2309,7 @@ window.blobsdesktop = (() => {
             if (batteryDiv && canUseBattery) dock.append(batteryDiv);
             dock.append(clockDiv);
 
-            startMenuButton.onclick = async function() {
+            startMenuButton.onclick = async function () {
                 openStartMenu();
             }
             startMenuButton.addEventListener("mouseenter", () => {
@@ -2319,9 +2320,9 @@ window.blobsdesktop = (() => {
                 startMenuButton.style.filter = "brightness(1)";
             });
 
-            requestAnimationFrame(async() => {
+            requestAnimationFrame(async () => {
                 const opacity = (await internalFS.getFile("/system/env/systemconfig/settings/customization/dockopac.txt")) || "0.7";
-                
+
                 const computed = getComputedStyle(dock);
                 const baseColor = computed.backgroundColor;
                 const rgbaMatch = baseColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
@@ -2346,7 +2347,7 @@ window.blobsdesktop = (() => {
                 const code = await internalFS.getFile(app);
                 await runApp(appName, code, app);
             }
-            quantum.document.addEventListener("keyup", async(e) => {
+            quantum.document.addEventListener("keyup", async (e) => {
                 if (e.code === "KeyT" && e.altKey) {
                     e.preventDefault();
                     const termCode = await internalFS.getFile("/home/applications/Terminal.js");
@@ -2360,7 +2361,7 @@ window.blobsdesktop = (() => {
 
     }
 
-    
+
     return {
         // Main Sys
 
@@ -2373,7 +2374,7 @@ window.blobsdesktop = (() => {
             }
 
             await sys.addLine("Boot config found! Attempting to boot from specified path.");
-            
+
             if (!bootConfig.path) {
                 await sys.addLine("Incorrect boot config!");
                 await sys.addLine("Please reinstall BlobsDesktop!");
@@ -2432,6 +2433,6 @@ window.blobsdesktop = (() => {
             await mainInstaller();
             sessionType = "graphical";
         },
-        
+
     };
 })();

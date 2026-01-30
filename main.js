@@ -19,6 +19,7 @@
 
 if (typeof window === "undefined") {
   console.error("BlobsOS requires a browser with storage capabilities.");
+  alert("BlobsOS requires a browser with storage capabilities.");
   throw new Error("BlobsOS requires a browser environment.");
 }
 if ("serviceWorker" in navigator) {
@@ -28,37 +29,36 @@ if ("serviceWorker" in navigator) {
 }
 let sessionType = "terminal"
 const customColors = {
-  red: "#ff5454", 
+  red: "#ff5454",
   green: "#4eff33",
-  blue: "#338fff", 
+  blue: "#338fff",
 };
 
-const textInput = document.getElementById("textInput");
 
 navigator.storage.persist();
 
 window.sys = {
   async import(name) {
     try {
-            await sys.addLine(`[line=blue]Downloading ${name}...[/line]`)
-            const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/modules/${name}.js?v=${Date.now()}`;
-            const response = await fetch(url);
-    
-            if (response.ok) {
-                await sys.addLine("Module downloaded! Installing...")
-                const moduleData = await response.text();
-                internalFS.createPath(`/system/modules/${name}.js`, "file", moduleData);
-  
-                await sys.addLine("Module installed.")
-                await internalFS.loadPackage(`/system/modules/${name}.js`);
-            } else {
-                await sys.addLine(`[line=red]Failed to fetch module, response: ${response.status}[/line]`);
-            }
+      await sys.addLine(`[line=blue]Downloading ${name}...[/line]`)
+      const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/modules/${name}.js?v=${Date.now()}`;
+      const response = await fetch(url);
 
-        } catch (e) {
-            await sys.addLine(`[line=red]Failed to fetch module: ${name}.[/line]`);
-            await sys.addLine(`Error: ${e}`);
-        }
+      if (response.ok) {
+        await sys.addLine("Module downloaded! Installing...")
+        const moduleData = await response.text();
+        internalFS.createPath(`/system/modules/${name}.js`, "file", moduleData);
+
+        await sys.addLine("Module installed.")
+        await internalFS.loadPackage(`/system/modules/${name}.js`);
+      } else {
+        await sys.addLine(`[line=red]Failed to fetch module, response: ${response.status}[/line]`);
+      }
+
+    } catch (e) {
+      await sys.addLine(`[line=red]Failed to fetch module: ${name}.[/line]`);
+      await sys.addLine(`Error: ${e}`);
+    }
 
   },
   async runCMD(input, params = []) {
@@ -74,10 +74,10 @@ window.sys = {
       if (typeof cmd === "function") {
         await cmd(args);
       } else {
-       sys.addLine(`[line=red]${command} is not a command, package or app.[/line]`);
+        sys.addLine(`[line=red]${command} is not a command, package or app.[/line]`);
       }
     } catch (e) {
-     sys.addLine("[line=red]Failed to run command[/line]");
+      sys.addLine("[line=red]Failed to run command[/line]");
       console.error(`Failed to run command "${command}".\nError:\n\n`, e);
     }
   },
@@ -92,13 +92,13 @@ window.sys = {
     const coloredText = parseColorsAndBackgrounds(escapedText);
     const html = marked.parse(coloredText);
 
-    const termContentDiv = document.createElement('div');
-    termContentDiv.innerHTML = html;
-    termDiv.appendChild(termContentDiv);
-    termDiv.scrollTop = termDiv.scrollHeight;
-    if (textInput) {
-      textInput.scroll();
-    }
+    // const termContentDiv = document.createElement('div');
+    // termContentDiv.innerHTML = html;
+    // termDiv.appendChild(termContentDiv);
+    // termDiv.scrollTop = termDiv.scrollHeight;
+    // if (textInput) {
+    //   textInput.scroll();
+    // }
     
   }
 }
@@ -198,60 +198,39 @@ function sandboxEval(code, context = {}) {
 
 
 
+
+
 let termInput = "";
 const termDiv = document.getElementById("termDiv");
 let inputAnswerActive = false;
 let keysLocked = false;
 let inputAnswer = undefined;
-sys.addLine("## Booting system...");
-sys.addLine("### Made by [color=rgb(100, 175, 255)]Allucat1000.[/color] Forked by [color=rgba(240, 74, 74, 1)]BulbaSprout.[/color]");
-sys.addLine("Use the \"hpkg install\" to install a package. \n Make sure to update your packages often using \"hpkg update\".")
+// sys.addLine("## Booting system...");
+// sys.addLine("### Made by [color=rgb(100, 175, 255)]Allucat1000.[/color] Forked by [color=rgba(240, 74, 74, 1)]BulbaSprout.[/color]");
+// sys.addLine("Use the \"hpkg install\" to install a package. \n Make sure to update your packages often using \"hpkg update\".")
 const currentVer = "0.5.0"
 const verBranch = "main";
-if (verBranch === "dev") {
-  sys.addLine("### [line=yellow]Hold up![/line]")
-  sys.addLine("### [line=yellow]The dev branch is in use currently! Be ready for bugs![/line]")
-}
+// if (verBranch === "dev") {
+//   sys.addLine("### [line=yellow]Hold up![/line]")
+//   sys.addLine("### [line=yellow]The dev branch is in use currently! Be ready for bugs![/line]")
+// }
 
-textInput.focus()
+// textInput.focus()
 
 const keysDown = {};
 
 document.addEventListener("keydown", (event) => {
-    keysDown[event.key.toLowerCase()] = true;
+  keysDown[event.key.toLowerCase()] = true;
 });
 
 document.addEventListener("keyup", (event) => {
-    keysDown[event.key.toLowerCase()] = false;
+  keysDown[event.key.toLowerCase()] = false;
 });
 
 function isKeyDown(key) {
-    return !!keysDown[key.toLowerCase()];
+  return !!keysDown[key.toLowerCase()];
 }
 
-textInput.addEventListener('keydown', function(event) {
-  if (keysLocked) return;
-  if (event.key === 'Enter') {
-    const cmd = textInput.value.split(' ')[0]
-    const params = textInput.value
-        .split(' ')
-        .slice(1);
-    
-  const replaced = params.map(str =>
-    str.replace(/\\@/g, "@")
-      .replace(/(?<!\\)@/g, "#")
-  );
-    sys.addLine("$ " + textInput.value)
-    if (!inputAnswerActive) {
-        callCMD(cmd, replaced)
-    } else {
-        inputAnswer = cmd;
-        inputAnswerActive = false
-    }
-
-    textInput.value = "";
-  }
-});
 
 
 const DB_NAME = "BlobsOS";
@@ -318,7 +297,7 @@ const idbFS = {
 };
 
 const internalFS = {
-  async getFile(path, permissions = {"read":"SYSTEM", "write":"SYSTEM", "modify":"SYSTEM"}) {
+  async getFile(path, permissions = { "read": "SYSTEM", "write": "SYSTEM", "modify": "SYSTEM" }) {
     if (permissions.read = "SYSTEM") {
       return await idbFS.getFile(path);
     }
@@ -332,13 +311,13 @@ const internalFS = {
   },
 
   async createPath(path, type = "dir", content = "", permissions = {
-    "read":"",
-    "write":"",
-    "modify":"",
+    "read": "",
+    "write": "",
+    "modify": "",
   }) {
     if (await internalFS.getFile(path)) {
       const currentPerms = JSON.parse(await internalFS.getFile(path + ".perms") || "{\"read\":\"\", \"write\":\"\", \"modify\":\"\"}")
-      if (currentPerms.write === (permissions.write || permissions)|| currentPerms.write === "" || permissions.write === "SYSTEM" || !await internalFS.getFile(path + ".perms") || !currentPerms.write && currentPerms === permissions) {
+      if (currentPerms.write === (permissions.write || permissions) || currentPerms.write === "" || permissions.write === "SYSTEM" || !await internalFS.getFile(path + ".perms") || !currentPerms.write && currentPerms === permissions) {
       } else {
         console.warn("Not right permissions!")
         return "Not right permissions!";
@@ -354,10 +333,10 @@ const internalFS = {
 
     if (type === "dir") {
       await idbFS.setFile(path, content === "" ? "[]" : content);
-      await idbFS.setFile(path + ".perms", JSON.stringify(permissions || { "write":"SYSTEM", "read":"SYSTEM", "modify":"SYSTEM"}));
+      await idbFS.setFile(path + ".perms", JSON.stringify(permissions || { "write": "SYSTEM", "read": "SYSTEM", "modify": "SYSTEM" }));
     } else if (type === "file") {
       await idbFS.setFile(path, content);
-      await idbFS.setFile(path + ".perms", JSON.stringify(permissions || { "write":"SYSTEM", "read":"SYSTEM", "modify":"SYSTEM"}));
+      await idbFS.setFile(path + ".perms", JSON.stringify(permissions || { "write": "SYSTEM", "read": "SYSTEM", "modify": "SYSTEM" }));
     } else {
       throw new Error("Unknown path type: " + type);
     }
@@ -376,7 +355,7 @@ const internalFS = {
     }
   },
 
-  async delDir(dir, permissions = {"read":"SYSTEM","write":"SYSTEM", "modify":"SYSTEM"}, recursive = false, force = false, visited = new Set()) {
+  async delDir(dir, permissions = { "read": "SYSTEM", "write": "SYSTEM", "modify": "SYSTEM" }, recursive = false, force = false, visited = new Set()) {
     if (visited.has(dir)) return;
     visited.add(dir);
 
@@ -397,15 +376,15 @@ const internalFS = {
 
       if (isDir) {
         if (recursive) {
-          if (item != "/" && item != "/system"){
+          if (item != "/" && item != "/system") {
             await internalFS.delDir(item, permissions, recursive, force, visited);
-          }else sys.addLine(`[line=red]Cannot delete directory ${item} because it will result in system breaking permanently[/line]`)
+          } else sys.addLine(`[line=red]Cannot delete directory ${item} because it will result in system breaking permanently[/line]`)
         } else {
           if (!force) sys.addLine(`[line=red]Cannot delete directory ${item} without recursive flag[/line]`);
           return;
         }
       } else {
-        const currentPerms = JSON.parse(await internalFS.getFile(item + ".perms")) || {"read":"","write":"", "modify":""}
+        const currentPerms = JSON.parse(await internalFS.getFile(item + ".perms")) || { "read": "", "write": "", "modify": "" }
         if (currentPerms.modify === permissions || currentPerms.modify === "" || permissions.modify === "SYSTEM" || !await internalFS.getFile(item + ".perms")) {
           await idbFS.deleteFile(item);
           await idbFS.deleteFile(item + ".perms");
@@ -413,13 +392,13 @@ const internalFS = {
           console.warn("Not right permissions!")
           return "Not right permissions!";
         }
-        
+
       }
     }
-    const currentPerms = JSON.parse(await internalFS.getFile(dir + ".perms")) || {"read":"","write":"", "modify":""}
+    const currentPerms = JSON.parse(await internalFS.getFile(dir + ".perms")) || { "read": "", "write": "", "modify": "" }
     if (currentPerms.modify === permissions || currentPerms.modify === "" || permissions.modify === "SYSTEM" || !await internalFS.getFile(item + ".perms")) {
-    await idbFS.deleteFile(dir);
-    await idbFS.deleteFile(dir + ".perms");
+      await idbFS.deleteFile(dir);
+      await idbFS.deleteFile(dir + ".perms");
     } else {
       console.warn("Not right permissions!")
       return "Not right permissions!"
@@ -502,11 +481,9 @@ const internalFS = {
       }
     }
 
-    await sys.addLine(`Do you want to run a script from the path: ${path} unsandboxed? [A/y/n]`);
-    inputAnswerActive = true;
-    await waitUntil(() => !inputAnswerActive);
+    
 
-    const answer = inputAnswer.toLowerCase();
+    const answer = "a";
     if (["y", "", "a"].includes(answer)) {
       try {
         if (["a", ""].includes(answer) && !allowList.includes(path)) {
@@ -534,7 +511,7 @@ const internalFS = {
 
 
 async function checkFileSystemIntegrity() {
-  const requiredDirs = ["/system", "/home",  "/system/packages"];
+  const requiredDirs = ["/system", "/home", "/system/packages"];
   const issues = [];
 
   for (const dir of requiredDirs) {
@@ -571,7 +548,7 @@ async function callCMD(input, params) {
           return;
         }
         if (params[1].toLowerCase())
-        await internalFS.downloadPackage(params[1].toLowerCase());
+          await internalFS.downloadPackage(params[1].toLowerCase());
         const manifestFetch = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/packages/${params[1].toLowerCase()}.js.config?v=${Date.now()}`);
         let data
         if (manifestFetch.ok) {
@@ -589,12 +566,12 @@ async function callCMD(input, params) {
 
       } else if (params[0].toLowerCase() === "update") {
         const packageList = JSON.parse(await internalFS.getFile("/system/packages") || []);
-        
+
         for (let i = 0; i < packageList.length; i++) {
           if (packageList[i].endsWith(".config")) return;
           let oldManifest = await internalFS.getFile(`${packageList[i]}.config`);
           let updatePackage = false;
-          const manifestFetch = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/packages/${packageList[i].replace("/system/packages/","")}.config?v=${Date.now()}`);
+          const manifestFetch = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/packages/${packageList[i].replace("/system/packages/", "")}.config?v=${Date.now()}`);
           if (manifestFetch.ok) {
             let data = await manifestFetch.text()
             data = JSON.parse(data);
@@ -608,30 +585,30 @@ async function callCMD(input, params) {
               updatePackage = true;
             }
           } else {
-              console.error("Failed to fetch package manifest file!");
-              await sys.addLine("[line=red]Failed to fetch package manifest file![/line]")
+            console.error("Failed to fetch package manifest file!");
+            await sys.addLine("[line=red]Failed to fetch package manifest file![/line]")
           }
           if (updatePackage === true) {
-            await internalFS.downloadPackage(packageList[i].replace("/system/packages/","").replace(".js",""));
+            await internalFS.downloadPackage(packageList[i].replace("/system/packages/", "").replace(".js", ""));
           }
-          
+
         }
         try {
-            const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
-            const response = await fetch(url);
-    
-            if (response.ok) {
-                await sys.addLine("Terminal CmdList downloaded! Installing...")
-                const fetchData = await response.text();
-                internalFS.createPath(`/system/terminalcmd.js`, "file", fetchData);
-                sys.addLine("[line=green]Terminal commands succesfully installed![/line]")
-            } else {
-                await sys.addLine(`[line=red]Failed to fetch terminal commands, response: ${response.status}[/line]`);
-            }
+          const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
+          const response = await fetch(url);
+
+          if (response.ok) {
+            await sys.addLine("Terminal CmdList downloaded! Installing...")
+            const fetchData = await response.text();
+            internalFS.createPath(`/system/terminalcmd.js`, "file", fetchData);
+            sys.addLine("[line=green]Terminal commands succesfully installed![/line]")
+          } else {
+            await sys.addLine(`[line=red]Failed to fetch terminal commands, response: ${response.status}[/line]`);
+          }
 
         } catch (e) {
-            await sys.addLine(`[line=red]Failed to fetch terminal commands.[/line]`);
-            await sys.addLine(`Error: ${e}`);
+          await sys.addLine(`[line=red]Failed to fetch terminal commands.[/line]`);
+          await sys.addLine(`Error: ${e}`);
         }
       } else {
         sys.addLine(`[line=red]Unknown hPKG command: ${params[0]}[/line]`)
@@ -639,7 +616,7 @@ async function callCMD(input, params) {
       return;
 
 
-    
+
     } else {
       if (input.toLowerCase() === "sysfix") {
         await sys.addLine("Reinstalling core system files...");
@@ -658,41 +635,41 @@ async function callCMD(input, params) {
         let unsandboxed = params[0] === "-nsbx" ? 1 : 0;
 
         if (inputName === pkgNameLower) {
-            
-            let method = params[0 + unsandboxed] || "init";
-            let args = params.slice(1 + unsandboxed);
 
-            if (unsandboxed === 1) {
-              await internalFS.runUnsandboxed(`/system/packages/${pkgName}.js`);
-              const pkg = window[pkgNameLower];
-              if (!pkg) {
-                sys.addLine("Unsandboxed run cancelled!")
-                return;
-              }
-            } else {
-              await internalFS.loadPackage(`/system/packages/${pkgName}.js`);
-            }
+          let method = params[0 + unsandboxed] || "init";
+          let args = params.slice(1 + unsandboxed);
 
-            await new Promise(resolve => setTimeout(resolve, 500));
-
+          if (unsandboxed === 1) {
+            await internalFS.runUnsandboxed(`/system/packages/${pkgName}.js`);
             const pkg = window[pkgNameLower];
-            if (pkg && typeof pkg[method] === "function") {
-              try {
-                await pkg[method](...args);
-              } catch (error) {
-                sys.addLine(`Error: ${error}`);
-              }
-            } else {
-              await sys.addLine("[line=red]Invalid method[/line]");
-              console.warn("Invalid package or method:", inputName, method);
+            if (!pkg) {
+              sys.addLine("Unsandboxed run cancelled!")
+              return;
             }
+          } else {
+            await internalFS.loadPackage(`/system/packages/${pkgName}.js`);
+          }
+
+          await new Promise(resolve => setTimeout(resolve, 500));
+
+          const pkg = window[pkgNameLower];
+          if (pkg && typeof pkg[method] === "function") {
+            try {
+              await pkg[method](...args);
+            } catch (error) {
+              sys.addLine(`Error: ${error}`);
+            }
+          } else {
+            await sys.addLine("[line=red]Invalid method[/line]");
+            console.warn("Invalid package or method:", inputName, method);
+          }
           return;
         }
       }
 
 
     }
-  sys.runCMD(input, params)
+    sys.runCMD(input, params)
   }
 
 }
@@ -700,15 +677,29 @@ async function callCMD(input, params) {
 
 async function init(reinstall) {
   let root = await internalFS.getFile("/");
-  const isInstalled = await isSystemInstalled()
-
+  const isInstalled = await isSystemInstalled();
+  const isOobe = await isOobeCompleted();
   if (!isInstalled || reinstall) {
     if (!reinstall) {
-      await sys.addLine("### System files are not installed yet. Install? [Y/n]");
-      inputAnswerActive = true;
-      await waitUntil(() => !inputAnswerActive);
+      console.log(isOobe)
+      if (isOobe == false) {
+        console.log("Starting oobe")
+        let oobeDiv = document.getElementById("oobe")
+        fetch("oobe/oobe.html")
+          .then(r => r.text())
+          .then(html => {
+            oobeDiv.innerHTML = html;
+
+            const script = document.createElement("script");
+            script.src = "/BlobsOS/oobe/oobe.js";
+            script.defer = true;
+
+            oobeDiv.appendChild(script);
+          });
+      }
     }
-    if (inputAnswer.toLowerCase() === "y" || inputAnswer.toLowerCase() === "" || reinstall) {
+    if (!isInstalled && isOobe || reinstall) {
+      console.log("HI!")
       await sys.addLine("Creating system directories and files...")
       await internalFS.createPath("/");
       await internalFS.createPath("/system");
@@ -721,32 +712,29 @@ async function init(reinstall) {
         version: currentVer,
         installedAt: Date.now(),
         corePaths: [
-        "/", "/home", "/system"]
+          "/", "/home", "/system"]
       }));
 
       try {
-            const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
-            const response = await fetch(url);
-    
-            if (response.ok) {
-                await sys.addLine("Terminal CmdList downloaded! Installing...")
-                const fetchData = await response.text();
-                internalFS.createPath(`/system/terminalcmd.js`, "file", fetchData);
-            } else {
-                await sys.addLine(`[line=red]Failed to fetch terminal commands, response: ${response.status}[/line]`);
-            }
+        const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
+        const response = await fetch(url);
 
-        } catch (e) {
-            await sys.addLine(`[line=red]Failed to fetch terminal commands.[/line]`);
-            await sys.addLine(`Error: ${e}`);
+        if (response.ok) {
+          await sys.addLine("Terminal CmdList downloaded! Installing...")
+          const fetchData = await response.text();
+          internalFS.createPath(`/system/terminalcmd.js`, "file", fetchData);
+        } else {
+          await sys.addLine(`[line=red]Failed to fetch terminal commands, response: ${response.status}[/line]`);
         }
+
+      } catch (e) {
+        await sys.addLine(`[line=red]Failed to fetch terminal commands.[/line]`);
+        await sys.addLine(`Error: ${e}`);
+      }
       sys.addLine("[line=green]Terminal commands installed[/line]");
       await internalFS.downloadPackage("blobsdesktop");
       await callCMD("blobsdesktop", ["install"]);
-      
-    } else {
-        await sys.addLine("**System file creation cancelled.**")
-        await sys.addLine("[line=red]**_You will be unable to use the system, since you don't have core system files._**[/line]")
+
     }
   } else {
     const issues = await checkFileSystemIntegrity();
@@ -764,7 +752,7 @@ async function init(reinstall) {
     }
 
     await bootMGR()
-    
+
   }
 }
 
@@ -780,43 +768,43 @@ async function bootMGR() {
   if (await internalFS.getFile("/system/env/config.json")) {
     const currentTime = Date.now();
     const waitTime = currentTime + 1000;
-    await waitUntil(() => Date.now() > waitTime || textInput.value.toLowerCase() === "c");
-    if (Date.now() > waitTime) {loadEnv = true;} else {textInput.value = "";}
+    await waitUntil(() => Date.now() > waitTime);
+    if (Date.now() > waitTime) { loadEnv = true; }
   }
   if (loadEnv) {
-      keysLocked = false;
-      sys.addLine("[line=green]Environment boot config found (/system/env/config.json).[/line]");
+    keysLocked = false;
+    sys.addLine("[line=green]Environment boot config found (/system/env/config.json).[/line]");
 
-      const config = JSON.parse(await internalFS.getFile("/system/env/config.json"));
+    const config = JSON.parse(await internalFS.getFile("/system/env/config.json"));
 
-      if (!config.bootpath || !config.bootname || !config.bootcmd) {
-          sys.addLine("[line=red]Corrupted config! Missing bootpath, bootname, or bootcmd.[/line]");
-          return;
-      }
-
-      try {
-          await internalFS.loadPackage(config.bootpath);
-
-          const cmd = window[config.bootname]?.[config.bootcmd];
-
-          if (typeof cmd === "function") {
-              await cmd();
-          } else {
-              sys.addLine(`[line=red]Boot command "${config.bootcmd}" not found in "${config.bootname}".[/line]`);
-          }
-      } catch (e) {
-          sys.addLine(`[line=red]Boot failed: ${e}[/line]`);
-          console.error("BootMGR error:", e);
-      }
+    if (!config.bootpath || !config.bootname || !config.bootcmd) {
+      sys.addLine("[line=red]Corrupted config! Missing bootpath, bootname, or bootcmd.[/line]");
       return;
+    }
+
+    try {
+      await internalFS.loadPackage(config.bootpath);
+
+      const cmd = window[config.bootname]?.[config.bootcmd];
+
+      if (typeof cmd === "function") {
+        await cmd();
+      } else {
+        sys.addLine(`[line=red]Boot command "${config.bootcmd}" not found in "${config.bootname}".[/line]`);
+      }
+    } catch (e) {
+      sys.addLine(`[line=red]Boot failed: ${e}[/line]`);
+      console.error("BootMGR error:", e);
+    }
+    return;
   }
 
-    await new Promise(resolve => setTimeout(resolve, 500));
-    keysLocked = false;
+  await new Promise(resolve => setTimeout(resolve, 500));
+  keysLocked = false;
 
-    
 
-    
+
+
 }
 
 init();
@@ -830,12 +818,12 @@ async function termContentChange(data) {
 function waitUntil(conditionFn, checkInterval = 50) {
   return new Promise(resolve => {
     const interval = setInterval(() => {
-        if (conditionFn()) {
-            clearInterval(interval);
-            resolve();
-        }
+      if (conditionFn()) {
+        clearInterval(interval);
+        resolve();
+      }
     }, checkInterval);
-});
+  });
 }
 
 function getColor(colorName) {
@@ -868,31 +856,31 @@ function parseColorsAndBackgrounds(text) {
 
 function escapeWithBackslashes(str) {
   return str.replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 
 
 async function recoveryCheck() {
-  const issues = await checkFileSystemIntegrity();
-  if (!issues) return;
+  // const issues = await checkFileSystemIntegrity();
+  // if (!issues) return;
 
 
-  internalFS.createPath("/system/manifest.json", "file", JSON.stringify({
-    version: currentVer,
-    installedAt: Date.now(),
-    corePaths: [
-      "/", "/home", "/system"]
-    }));
-  for (const issue of issues) {
-    const dir = issue.split(" ")[0];
-    await internalFS.createPath(dir, "file", JSON.stringify([]));
-    console.warn(`Recovered: ${dir}`);
-    await sys.addLine(`[line=green]Recovered directory: ${dir}[/line]`);
-  }
+  // internalFS.createPath("/system/manifest.json", "file", JSON.stringify({
+  //   version: currentVer,
+  //   installedAt: Date.now(),
+  //   corePaths: [
+  //     "/", "/home", "/system"]
+  // }));
+  // for (const issue of issues) {
+  //   const dir = issue.split(" ")[0];
+  //   await internalFS.createPath(dir, "file", JSON.stringify([]));
+  //   console.warn(`Recovered: ${dir}`);
+  //   await sys.addLine(`[line=green]Recovered directory: ${dir}[/line]`);
+  // }
 }
 
 async function isSystemInstalled() {
@@ -902,14 +890,34 @@ async function isSystemInstalled() {
   } catch {
     return false;
   }
-  
+
   if (!rootDir) { return false };
   if (rootDir.includes("/home") || rootDir.includes("/manifest.json") || rootDir.includes("/system")) {
     if (rootDir.includes("/home") && rootDir.includes("/manifest.json") && rootDir.includes("/system")) {
       return true;
     } else {
-      return "recovery";
+      if (rootDir.includes("/system/config")) {
+        return false
+      } else
+        return false //fuckoff vro
     }
+  } else {
+    return false;
+  }
+}
+
+
+async function isOobeCompleted() {
+  let rootDir;
+  try {
+    rootDir = JSON.parse(await internalFS.getFile("/"));
+  } catch {
+    return false;
+  }
+
+  if (!rootDir) { return false };
+  if (internalFS.getFile("/system/config")) {
+    return true
   } else {
     return false;
   }

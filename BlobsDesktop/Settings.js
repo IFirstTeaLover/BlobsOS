@@ -6,6 +6,8 @@ async function mainScreen() {
     const mainScreenDiv = document.createElement("div"); //create app window
     const title = document.createElement("h1"); //create title
 
+    mainScreenDiv.style.width="100px";
+
     title.textContent = "Settings";
     title.style = "text-align: center;  margin: 1em;";
 
@@ -20,22 +22,22 @@ async function mainScreen() {
     const wTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>';
     wallpapersTabIcon.style = "margin-right: 0.33em;"
 
-    setAttrs(wallpapersTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(wTabIconSrc)})
-;
+    setAttrs(wallpapersTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(wTabIconSrc)});
+
     const wTabLabel = document.createElement("label"); // create label of tab wallpaper
     wTabLabel.textContent = "Wallpapers"; //set label name
     //append icon and label
     wallpapersTab.append(wallpapersTabIcon);
     wallpapersTab.append(wTabLabel);
 
-    wTabLabel.style.cursor = "pointer";//make css change cursor to pointer on hover
+    wTabLabel.style.cursor = "pointer"; //make css change cursor to pointer on hover
     //make icon and label centered
     wallpapersTab.style.display = "flex";
     wallpapersTab.style.justifyContent = "center";
 
     wallpapersTab.style.padding = "1.25em";//increase tab size
     wallpapersTab.style.margin = "1em auto";//make icon and label smaller
-    wallpapersTab.style.width = "90%";//set width to 90% of window
+    wallpapersTab.style.width = "50%";//set width to 90% of window
 
     mainScreenDiv.append(wallpapersTab);//append tab to window
 
@@ -67,7 +69,7 @@ async function mainScreen() {
 
     customizationTab.style.padding = "1.25em";
     customizationTab.style.margin = "1em auto";
-    customizationTab.style.width = "90%";
+    customizationTab.style.width = "50%";
     
     mainScreenDiv.append(customizationTab);
     customizationTab.onclick = () => {
@@ -76,55 +78,60 @@ async function mainScreen() {
     };
 
     const dockTab = document.createElement("button");
-
     const dockTabIcon = document.createElement("img");
+
     const dTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dock-icon lucide-dock"><path d="M2 8h20"/><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 16h12"/></svg>';
     dockTabIcon.style = "margin-right: 0.33em;"
-    setAttrs(dockTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(dTabIconSrc)})
-;
+
+    setAttrs(dockTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(dTabIconSrc)});
+
     const dTabLabel = document.createElement("label");
     dTabLabel.textContent = "Dock"
+
     dockTab.append(dockTabIcon);
     dockTab.append(dTabLabel);
+
     dTabLabel.style.cursor = "pointer"
 
     dockTab.style.display = "flex"
-
     dockTab.style.justifyContent = "center"
-
 
     dockTab.style.padding = "1.25em"
 
     dockTab.style.margin = "1em auto";
-    dockTab.style.width = "65%";
+    dockTab.style.width = "50%";
+
     mainScreenDiv.append(dockTab);
+
     dockTab.onclick = () => {
         mainScreenDiv.remove();
         dockTabLoad();
     };
 
-    const appTab = document.createElement("button");
 
+    const appTab = document.createElement("button");
     const appTabIcon = document.createElement("img");
+
     const appTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-app-window-mac-icon lucide-app-window-mac"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/></svg>';
     appTabIcon.style = "margin-right: 0.33em;"
-    setAttrs(appTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(appTabIconSrc)})
-;
+
+    setAttrs(appTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(appTabIconSrc)});
+
     const appTabLabel = document.createElement("label");
     appTabLabel.textContent = "Boot Apps"
+
     appTab.append(appTabIcon);
     appTab.append(appTabLabel);
+
     appTabLabel.style.cursor = "pointer"
 
     appTab.style.display = "flex"
-
     appTab.style.justifyContent = "center"
 
-
     appTab.style.padding = "1.25em"
-
     appTab.style.margin = "1em auto";
-    appTab.style.width = "65%";
+    appTab.style.width = "50%";
+
     mainScreenDiv.append(appTab);
     appTab.onclick = () => {
         mainScreenDiv.remove();
@@ -132,28 +139,30 @@ async function mainScreen() {
     };
 
     const themeTab = document.createElement("button");
-
     const themeTabIcon = document.createElement("img");
+
     const themeTabIconSrc = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-paintbrush-icon lucide-paintbrush'><path d='m14.622 17.897-10.68-2.913'/><path d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z'/><path d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15'/></svg>";
     themeTabIcon.style = "margin-right: 0.33em;"
-    setAttrs(themeTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(themeTabIconSrc)})
-;
+
+    setAttrs(themeTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(themeTabIconSrc)});
+
     const themeTabLabel = document.createElement("label");
     themeTabLabel.textContent = "Themes"
+
     themeTab.append(themeTabIcon);
     themeTab.append(themeTabLabel);
+
     themeTabLabel.style.cursor = "pointer"
 
     themeTab.style.display = "flex"
-
     themeTab.style.justifyContent = "center"
 
-
     themeTab.style.padding = "1.25em"
-
     themeTab.style.margin = "1em auto";
-    themeTab.style.width = "65%";
+    themeTab.style.width = "50%";
+
     mainScreenDiv.append(themeTab);
+
     themeTab.onclick = () => {
         mainScreenDiv.remove();
         themeTabLoad();

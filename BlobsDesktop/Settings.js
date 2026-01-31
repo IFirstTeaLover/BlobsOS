@@ -49,7 +49,11 @@ async function mainScreen() {
 
     setAttrs(customizationTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(cTabIconSrc)});
 
+    const cTabLabel = document.createElement("label");
+    cTabLabel.textContent = "Customization"
+
     customizationTab.append(customizationTabIcon);
+    customizationTab.append(cTabLabel);
 
     cTabLabel.style.cursor = "pointer";
 
@@ -74,7 +78,11 @@ async function mainScreen() {
 
     setAttrs(dockTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(dTabIconSrc)});
 
+    const dTabLabel = document.createElement("label");
+    dTabLabel.textContent = "Dock"
+
     dockTab.append(dockTabIcon);
+    dockTab.append(dTabLabel);
 
     dTabLabel.style.cursor = "pointer"
 
@@ -102,7 +110,11 @@ async function mainScreen() {
 
     setAttrs(appTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(appTabIconSrc)});
 
+    const appTabLabel = document.createElement("label");
+    appTabLabel.textContent = "Boot Apps"
+
     appTab.append(appTabIcon);
+    appTab.append(appTabLabel);
 
     appTabLabel.style.cursor = "pointer"
 
@@ -127,7 +139,11 @@ async function mainScreen() {
 
     setAttrs(themeTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(themeTabIconSrc)});
 
+    const themeTabLabel = document.createElement("label");
+    themeTabLabel.textContent = "Themes"
+
     themeTab.append(themeTabIcon);
+    themeTab.append(themeTabLabel);
 
     themeTabLabel.style.cursor = "pointer"
 

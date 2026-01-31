@@ -1,9 +1,15 @@
 mainScreen();
 
 async function mainScreen() {
-    await blobsAPI.setTitle("Settings"); //set app title
+    await blobsAPI.setTitle("Settings"); //set app title.
 
     const mainScreenDiv = document.createElement("div"); //create app window
+
+    Object.assign(mainScreenDiv.style, {
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 1fr))",
+        gap: "1.25em",
+    });
 
     //append window and title
     document.body.append(mainScreenDiv);
@@ -15,7 +21,7 @@ async function mainScreen() {
     const wTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>';
     wallpapersTabIcon.style = "margin-right: 0.33em;"
 
-    setAttrs(wallpapersTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(wTabIconSrc)});
+    setAttrs(wallpapersTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(wTabIconSrc) });
 
     const wTabLabel = document.createElement("label"); // create label of tab wallpaper
     wTabLabel.textContent = "Wallpapers"; //set label name
@@ -47,7 +53,7 @@ async function mainScreen() {
     const cTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings2-icon lucide-settings-2"><path d="M14 17H5"/><path d="M19 7h-9"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>';
     customizationTabIcon.style = "margin-right: 0.2em;"
 
-    setAttrs(customizationTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(cTabIconSrc)});
+    setAttrs(customizationTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(cTabIconSrc) });
 
     const cTabLabel = document.createElement("label");
     cTabLabel.textContent = "Customization"
@@ -63,7 +69,7 @@ async function mainScreen() {
     customizationTab.style.padding = "1.25em";
     customizationTab.style.margin = "1em auto";
     customizationTab.style.width = "50%";
-    
+
     mainScreenDiv.append(customizationTab);
     customizationTab.onclick = () => {
         mainScreenDiv.remove();
@@ -76,7 +82,7 @@ async function mainScreen() {
     const dTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dock-icon lucide-dock"><path d="M2 8h20"/><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 16h12"/></svg>';
     dockTabIcon.style = "margin-right: 0.33em;"
 
-    setAttrs(dockTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(dTabIconSrc)});
+    setAttrs(dockTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(dTabIconSrc) });
 
     const dTabLabel = document.createElement("label");
     dTabLabel.textContent = "Dock"
@@ -108,7 +114,7 @@ async function mainScreen() {
     const appTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-app-window-mac-icon lucide-app-window-mac"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/></svg>';
     appTabIcon.style = "margin-right: 0.33em;"
 
-    setAttrs(appTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(appTabIconSrc)});
+    setAttrs(appTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(appTabIconSrc) });
 
     const appTabLabel = document.createElement("label");
     appTabLabel.textContent = "Boot Apps"
@@ -137,7 +143,7 @@ async function mainScreen() {
     const themeTabIconSrc = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-paintbrush-icon lucide-paintbrush'><path d='m14.622 17.897-10.68-2.913'/><path d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z'/><path d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15'/></svg>";
     themeTabIcon.style = "margin-right: 0.33em;"
 
-    setAttrs(themeTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(themeTabIconSrc)});
+    setAttrs(themeTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(themeTabIconSrc) });
 
     const themeTabLabel = document.createElement("label");
     themeTabLabel.textContent = "Themes"
@@ -241,19 +247,19 @@ async function wallpapersTabLoad() {
     importImg.style.marginBottom = "0.25em;"
     const importText = document.createElement("p");
     importText.textContent = "Add wallpaper";
-    setAttrs(importImg, {src: "data:image/svg+xml;utf8," + encodeURIComponent(iconSrc)})
+    setAttrs(importImg, { src: "data:image/svg+xml;utf8," + encodeURIComponent(iconSrc) })
 
     const importButton = document.createElement("button");
     importButton.width = "25%";
     importButton.style.margin = "1em"
-;
+        ;
     importButton.style.overflow = "hidden"
-;
+        ;
     importButton.style.minWidth = "200px"
-;
+        ;
     importButton.style.flex = "1 0 100px";
     importButton.style.maxWidth = "200px"
-;
+        ;
     importButton.style.aspectRatio = "16 / 9";
 
     importButton.append(importImg);
@@ -309,7 +315,7 @@ async function customizationTabLoad() {
     label.style = "color: white; display: block; text-align: center; margin: 0.5em auto; padding-bottom: 1.5em;";
     slider.margin = "0.5em auto";
     slider.style.display = "block"
-;
+        ;
 
     slider.oninput = async () => {
         label.textContent = slider.value + "px";
@@ -339,7 +345,7 @@ async function customizationTabLoad() {
     opacLabel.style = "color: white; display: block; text-align: center; margin: 0.5em auto; padding-bottom: 1.5em;";
     opacSlider.margin = "0.5em auto";
     opacSlider.style.display = "block"
-;
+        ;
 
     opacSlider.oninput = async () => {
         opacLabel.textContent = Math.round(opacSlider.value * 100) + "%";
@@ -361,7 +367,7 @@ async function customizationTabLoad() {
     appBorderColorPicker.value = await blobsAPI.getFile("/system/env/systemconfig/settings/customization/windowbordercolor.txt") || "";
     mainScreenDiv.append(appBorderColorPicker);
     appBorderColorDiv.style.margin = "1em"
-;
+        ;
 
     appBorderColorPicker.oninput = async () => {
         await blobsAPI.writeFile("/system/env/systemconfig/settings/customization/windowbordercolor.txt", "file", appBorderColorPicker.value);
@@ -401,10 +407,10 @@ async function dockTabLoad() {
     dockDockedCheckbox.checked = await blobsAPI.getFile("/system/env/systemconfig/settings/customization/dockedTaskbar.txt") || false;
     mainScreenDiv.append(dockDockedCheckbox);
     dockDockedDiv.style.margin = "1em"
-;
+        ;
     dockDockedCheckbox.margin = "1em auto";
     dockDockedCheckbox.style.display = "block"
-;
+        ;
 
     dockDockedCheckbox.oninput = async () => {
         await blobsAPI.writeFile("/system/env/systemconfig/settings/customization/dockedTaskbar.txt", "file", dockDockedCheckbox.checked);
@@ -431,7 +437,7 @@ async function dockTabLoad() {
     opacLabel.style = "color: white; display: block; text-align: center; margin: 0.5em auto; padding-bottom: 1.5em;";
     opacSlider.margin = "0.5em auto";
     opacSlider.style.display = "block"
-;
+        ;
 
     opacSlider.oninput = async () => {
         opacLabel.textContent = Math.round(opacSlider.value * 100) + "%";
@@ -464,7 +470,7 @@ async function appTabLoad() {
     importImg.style.marginBottom = "0.25em;"
     const importText = document.createElement("p");
     importText.textContent = "Add boot app";
-    setAttrs(importImg, {src: "data:image/svg+xml;utf8," + encodeURIComponent(iconSrc)})
+    setAttrs(importImg, { src: "data:image/svg+xml;utf8," + encodeURIComponent(iconSrc) })
 
     const importButton = document.createElement("button");
     importButton.width = "25%";
@@ -514,41 +520,41 @@ async function appTabLoad() {
 }
 
 function extractFrameAsPNG(videoSrc, seekTime = 1) {
-  return new Promise((resolve, reject) => {
-    const video = document.createElement('video');
-    video.crossOrigin = "anonymous";
-    video.src = videoSrc;
-    video.muted = true;
-    
-    video.addEventListener('loadedmetadata', () => {
-      if (seekTime > video.duration) {
-        reject(new Error('Seek time exceeds video duration'));
-        return;
-      }
-      video.currentTime = seekTime;
+    return new Promise((resolve, reject) => {
+        const video = document.createElement('video');
+        video.crossOrigin = "anonymous";
+        video.src = videoSrc;
+        video.muted = true;
+
+        video.addEventListener('loadedmetadata', () => {
+            if (seekTime > video.duration) {
+                reject(new Error('Seek time exceeds video duration'));
+                return;
+            }
+            video.currentTime = seekTime;
+        });
+
+        video.addEventListener('seeked', () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(blob => {
+                if (blob) {
+                    resolve(blob);
+                } else {
+                    reject(new Error('Failed to convert canvas to blob'));
+                }
+            }, 'image/png');
+        });
+
+        video.addEventListener('error', e => {
+            reject(new Error('Error loading video: ' + e.message));
+        });
     });
-
-    video.addEventListener('seeked', () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
-
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      canvas.toBlob(blob => {
-        if (blob) {
-          resolve(blob);
-        } else {
-          reject(new Error('Failed to convert canvas to blob'));
-        }
-      }, 'image/png');
-    });
-
-    video.addEventListener('error', e => {
-      reject(new Error('Error loading video: ' + e.message));
-    });
-  });
 }
 
 async function themeTabLoad() {

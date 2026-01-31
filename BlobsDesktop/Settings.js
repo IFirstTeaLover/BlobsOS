@@ -4,16 +4,9 @@ async function mainScreen() {
     await blobsAPI.setTitle("Settings"); //set app title
 
     const mainScreenDiv = document.createElement("div"); //create app window
-    const title = document.createElement("h1"); //create title
-
-    mainScreenDiv.style.width="100px";
-
-    title.textContent = "Settings";
-    title.style = "text-align: center;  margin: 1em;";
 
     //append window and title
     document.body.append(mainScreenDiv);
-    mainScreenDiv.append(title);
 
     //create wallpapers button and icon
     const wallpapersTab = document.createElement("button");
@@ -56,11 +49,7 @@ async function mainScreen() {
 
     setAttrs(customizationTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(cTabIconSrc)});
 
-    const cTabLabel = document.createElement("label");
-    cTabLabel.textContent = "Customization"
-
     customizationTab.append(customizationTabIcon);
-    customizationTab.append(cTabLabel);
 
     cTabLabel.style.cursor = "pointer";
 
@@ -85,11 +74,7 @@ async function mainScreen() {
 
     setAttrs(dockTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(dTabIconSrc)});
 
-    const dTabLabel = document.createElement("label");
-    dTabLabel.textContent = "Dock"
-
     dockTab.append(dockTabIcon);
-    dockTab.append(dTabLabel);
 
     dTabLabel.style.cursor = "pointer"
 
@@ -117,11 +102,7 @@ async function mainScreen() {
 
     setAttrs(appTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(appTabIconSrc)});
 
-    const appTabLabel = document.createElement("label");
-    appTabLabel.textContent = "Boot Apps"
-
     appTab.append(appTabIcon);
-    appTab.append(appTabLabel);
 
     appTabLabel.style.cursor = "pointer"
 
@@ -146,11 +127,7 @@ async function mainScreen() {
 
     setAttrs(themeTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(themeTabIconSrc)});
 
-    const themeTabLabel = document.createElement("label");
-    themeTabLabel.textContent = "Themes"
-
     themeTab.append(themeTabIcon);
-    themeTab.append(themeTabLabel);
 
     themeTabLabel.style.cursor = "pointer"
 

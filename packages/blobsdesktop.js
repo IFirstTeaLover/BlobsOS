@@ -2110,6 +2110,11 @@ window.blobsdesktop = (() => {
             const desktop = quantum.document.createElement("div");
             importStylesheet(await internalFS.getFile("/system/env/systemStyles.css"), true);
             importStylesheet("https://fonts.googleapis.com/css?family=Figtree", false)
+            try {
+                instText.textContent = "Launching";
+            } catch (e) {
+                console.warn("Failed to change oobe installer name")
+            }
             const dock = quantum.document.createElement("div");
             const wallpaperChosen = await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt");
             const imageDataURI = await internalFS.getFile(wallpaperChosen);

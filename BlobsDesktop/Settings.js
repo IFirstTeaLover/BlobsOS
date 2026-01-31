@@ -1,33 +1,45 @@
 mainScreen();
 
 async function mainScreen() {
-    await blobsAPI.setTitle("Settings");
-    const mainScreenDiv = document.createElement("div");
-    const title = document.createElement("h1");
+    await blobsAPI.setTitle("Settings"); //set app title
+
+    const mainScreenDiv = document.createElement("div"); //create app window
+    const title = document.createElement("h1"); //create title
+
     title.textContent = "Settings";
     title.style = "text-align: center;  margin: 1em;";
+
+    //append window and title
     document.body.append(mainScreenDiv);
     mainScreenDiv.append(title);
 
+    //create wallpapers button and icon
     const wallpapersTab = document.createElement("button");
-
     const wallpapersTabIcon = document.createElement("img");
+    //apply the icon
     const wTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>';
     wallpapersTabIcon.style = "margin-right: 0.33em;"
+
     setAttrs(wallpapersTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(wTabIconSrc)})
 ;
-    const wTabLabel = document.createElement("label");
-    wTabLabel.textContent = "Wallpapers";
+    const wTabLabel = document.createElement("label"); // create label of tab wallpaper
+    wTabLabel.textContent = "Wallpapers"; //set label name
+    //append icon and label
     wallpapersTab.append(wallpapersTabIcon);
     wallpapersTab.append(wTabLabel);
-    wTabLabel.style.cursor = "pointer";
+
+    wTabLabel.style.cursor = "pointer";//make css change cursor to pointer on hover
+    //make icon and label centered
     wallpapersTab.style.display = "flex";
     wallpapersTab.style.justifyContent = "center";
 
-    wallpapersTab.style.padding = "1.25em";
-    wallpapersTab.style.margin = "1em auto";
-    wallpapersTab.style.width = "65%";
-    mainScreenDiv.append(wallpapersTab);
+    wallpapersTab.style.padding = "1.25em";//increase tab size
+    wallpapersTab.style.margin = "1em auto";//make icon and label smaller
+    wallpapersTab.style.width = "90%";//set width to 90% of window
+
+    mainScreenDiv.append(wallpapersTab);//append tab to window
+
+    //ts pmo ngl
     wallpapersTab.onclick = () => {
         mainScreenDiv.remove();
         wallpapersTabLoad();
@@ -35,23 +47,28 @@ async function mainScreen() {
 
 
     const customizationTab = document.createElement("button");
-
     const customizationTabIcon = document.createElement("img");
+
     const cTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings2-icon lucide-settings-2"><path d="M14 17H5"/><path d="M19 7h-9"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>';
     customizationTabIcon.style = "margin-right: 0.2em;"
-    setAttrs(customizationTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(cTabIconSrc)})
-;
+
+    setAttrs(customizationTabIcon, {src: "data:image/svg+xml;utf8," + encodeURIComponent(cTabIconSrc)});
+
     const cTabLabel = document.createElement("label");
     cTabLabel.textContent = "Customization"
+
     customizationTab.append(customizationTabIcon);
     customizationTab.append(cTabLabel);
+
     cTabLabel.style.cursor = "pointer";
+
     customizationTab.style.display = "flex";
     customizationTab.style.justifyContent = "center";
 
     customizationTab.style.padding = "1.25em";
     customizationTab.style.margin = "1em auto";
-    customizationTab.style.width = "65%";
+    customizationTab.style.width = "90%";
+    
     mainScreenDiv.append(customizationTab);
     customizationTab.onclick = () => {
         mainScreenDiv.remove();

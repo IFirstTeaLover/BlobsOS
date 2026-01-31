@@ -4,6 +4,7 @@ const inputs = Array.from(document.getElementsByTagName("input"));
 const selection = document.getElementsByTagName("input");
 const next = document.getElementById("nextButton");
 const sw = Array.from(document.querySelectorAll(".settingsSwitch"));
+const ISDEV = true;
 
 sw.forEach(e => { e.classList.add("hidden") })
 
@@ -66,7 +67,7 @@ function oobeStageSwitch() {
             card.style.transition = "width 500ms ease, height 500ms ease";
             card.style.width = "75px";
             card.style.height = "75px";
-            
+
             break;
     }
 }
@@ -78,11 +79,12 @@ async function cleanOobe() {
             break;
         case 3:
             console.log("Saving oobe config")
-            await internalFS.createPath('/system/config', "file", {apps: toBeInstalled, config: getConfig()})
+            await internalFS.createPath('/system/config', "file", { apps: toBeInstalled, config: getConfig() })
             console.log("Removing oobe")
             document.getElementsByClassName("oobe-content")[0].remove();
             document.getElementsByClassName("install")[0].style.display = "block";
             console.log("Trying to initialize")
+
             init(false)
             console.log("Initialized!")
             break;
@@ -93,15 +95,25 @@ document.querySelector(".apps-selall").addEventListener("click", () => {
     inputs.forEach(e => {
         e.checked = true;
     })
-    inputs[4].checked = false;
+    inputs[5].checked = false;
 })
-function getConfig(){
+function getConfig() {
     let datasetButtons = [];
-    document.querySelectorAll(".switch").forEach(b=>{
+    document.querySelectorAll(".switch").forEach(b => {
         const buttons = b.querySelectorAll(".switch-btn.active")
-        buttons.forEach(b=>{
+        buttons.forEach(b => {
             datasetButtons.push(b.dataset.pos);
         })
     });
     return datasetButtons;
+}
+
+
+if (ISDEV) {
+    oobeStage++
+    cleanOobe()
+    oobeStageSwitch()
+    oobeStage++
+    cleanOobe()
+    oobeStageSwitch()
 }

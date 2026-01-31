@@ -99,7 +99,7 @@ window.sys = {
     // if (textInput) {
     //   textInput.scroll();
     // }
-    
+
   }
 }
 
@@ -481,7 +481,7 @@ const internalFS = {
       }
     }
 
-    
+
 
     const answer = "y";
     if (["y", "", "a"].includes(answer)) {
@@ -676,6 +676,7 @@ async function callCMD(input, params) {
 // Bootloader / Installer
 
 async function init(reinstall) {
+  const instText = document.getElementsByClassName("installing")[0];
   let root = await internalFS.getFile("/");
   const isInstalled = await isSystemInstalled();
   const isOobe = await isOobeCompleted();
@@ -699,7 +700,6 @@ async function init(reinstall) {
       }
     }
     if (!isInstalled && isOobe || reinstall) {
-      console.log("HI!")
       await sys.addLine("Creating system directories and files...")
       await internalFS.createPath("/");
       await internalFS.createPath("/system");
@@ -732,9 +732,13 @@ async function init(reinstall) {
         await sys.addLine(`Error: ${e}`);
       }
       sys.addLine("[line=green]Terminal commands installed[/line]");
+      try {
+        instText.textContent = "Finishing up";
+      } catch (e) {
+        console.warn("Failed to change oobe installer name")
+      }
       await internalFS.downloadPackage("blobsdesktop");
       await callCMD("blobsdesktop", ["install"]);
-
     }
   } else {
     const issues = await checkFileSystemIntegrity();
@@ -750,7 +754,6 @@ async function init(reinstall) {
       }
 
     }
-
     await bootMGR()
 
   }
@@ -760,6 +763,7 @@ async function init(reinstall) {
 
 async function bootMGR() {
   sys.addLine("Root directory detected.");
+
   if (await internalFS.getFile("/system/env/config.json")) {
     sys.addLine("Press \"c\" to boot into the Terminal")
   }

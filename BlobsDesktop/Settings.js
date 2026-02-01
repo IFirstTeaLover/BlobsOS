@@ -4,9 +4,9 @@ async function mainScreen() {
     await blobsAPI.setTitle("Settings"); //set app title.
 
     const mainScreenDiv = document.createElement("div"); //create app window
-    
+
     mainScreenDiv.style = `display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); justify-items: stretch;`
-    console.log("Hello, from settings!")
+
     mainScreenDiv.querySelectorAll("button").forEach(btn => {
         btn.style.justifySelf = "center";
     });
@@ -36,7 +36,6 @@ async function mainScreen() {
 
     wallpapersTab.style.padding = "1.25em";//increase tab size
     wallpapersTab.style.margin = "1em auto";//make icon and label smaller
-    wallpapersTab.style.width = "50%";//set width to 90% of window
 
     mainScreenDiv.append(wallpapersTab);//append tab to window
 

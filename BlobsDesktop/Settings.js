@@ -5,7 +5,7 @@ async function mainScreen() {
 
     const mainScreenDiv = document.createElement("div"); //create app window
 
-    mainScreenDiv.style = `display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); justify-items: stretch;`
+    mainScreenDiv.style = `display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); justify-items: stretch; margin: 1em auto;`
 
     mainScreenDiv.querySelectorAll("button").forEach(btn => {
         btn.style.justifySelf = "center";
@@ -36,6 +36,7 @@ async function mainScreen() {
 
     wallpapersTab.style.padding = "1.25em";//increase tab size
     wallpapersTab.style.margin = "1em auto";//make icon and label smaller
+    wallpapersTab.style.width = "100%";
 
     mainScreenDiv.append(wallpapersTab);//append tab to window
 
@@ -67,7 +68,7 @@ async function mainScreen() {
 
     customizationTab.style.padding = "1.25em";
     customizationTab.style.margin = "1em auto";
-    customizationTab.style.width = "50%";
+    customizationTab.style.width = "100%";
 
     mainScreenDiv.append(customizationTab);
     customizationTab.onclick = () => {
@@ -97,7 +98,7 @@ async function mainScreen() {
     dockTab.style.padding = "1.25em"
 
     dockTab.style.margin = "1em auto";
-    dockTab.style.width = "50%";
+    dockTab.style.width = "100%";
 
     mainScreenDiv.append(dockTab);
 
@@ -128,7 +129,7 @@ async function mainScreen() {
 
     appTab.style.padding = "1.25em"
     appTab.style.margin = "1em auto";
-    appTab.style.width = "50%";
+    appTab.style.width = "100%";
 
     mainScreenDiv.append(appTab);
     appTab.onclick = () => {
@@ -157,7 +158,7 @@ async function mainScreen() {
 
     themeTab.style.padding = "1.25em"
     themeTab.style.margin = "1em auto";
-    themeTab.style.width = "50%";
+    themeTab.style.width = "100%";
 
     mainScreenDiv.append(themeTab);
 

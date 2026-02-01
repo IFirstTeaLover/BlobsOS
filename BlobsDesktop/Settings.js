@@ -5,8 +5,14 @@ async function mainScreen() {
 
     const mainScreenDiv = document.createElement("div"); //create app window
 
-    mainScreenDiv.style = `display: grid; gap: 1.25em; grid-template-columns: repeat(3, 1fr); justify-items: stretch; padding: 1.25em;`
+    mainScreenDiv.style = `
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 12px;
+        grid-row-gap: 12px; padding: 1.25em;`
 
+    
     mainScreenDiv.querySelectorAll("button").forEach(btn => {
         btn.style.justifySelf = "center";
     });

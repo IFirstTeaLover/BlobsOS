@@ -5,7 +5,7 @@ async function mainScreen() {
 
     const mainScreenDiv = document.createElement("div"); //create app window
 
-    mainScreenDiv.style = `display: grid; gap: 1em; grid-template-columns: repeat(3, 1fr); justify-items: stretch; margin: 1em auto;`
+    mainScreenDiv.style = `display: grid; gap: 1.25em; grid-template-columns: repeat(3, 1fr); justify-items: stretch; padding: 1.25em; grid-auto-rows: 1fr; align-items: stretch; height: 100%;`
 
     mainScreenDiv.querySelectorAll("button").forEach(btn => {
         btn.style.justifySelf = "center";

@@ -4,11 +4,11 @@ async function mainScreen() {
     await blobsAPI.setTitle("Settings"); //set app title.
 
     const mainScreenDiv = document.createElement("div"); //create app window
-
-    Object.assign(mainScreenDiv.style, {
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr))",
-        gap: "1.25em",
+    
+    mainScreenDiv.style = `display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); justify-items: stretch;`
+    console.log("Hello, from settings!")
+    mainScreenDiv.querySelectorAll("button").forEach(btn => {
+        btn.style.justifySelf = "center";
     });
 
     //append window and title

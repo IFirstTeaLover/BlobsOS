@@ -26,7 +26,7 @@ async function mainScreen() {
     //append window and title
     document.body.append(mainScreenDiv);
 
-    await newTab("Wallpapers", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>')
+    await newTab("Wallpapers", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>', mainScreenDiv)
     //create wallpapers button and icon
     // const wallpapersTab = document.createElement("button");
     // const wallpapersTabIcon = document.createElement("img");
@@ -182,7 +182,7 @@ async function mainScreen() {
 }
 
 
-async function newTab(name, icon) {
+async function newTab(name, icon, mainScreenDiv) {
     const tab = document.createElement("button");
     const tabIcon = document.createElement("img");
     const tabLabel = document.createElement("label");

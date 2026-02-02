@@ -221,7 +221,7 @@ input[type="checkbox"]:checked {
 .appTitleBar {
   background-color: rgba(0, 170, 170, 0.15);
 }
-/* Scrollbars (disabled for now)
+
 
 ::-webkit-scrollbar {
   width: 12px;              
@@ -250,7 +250,7 @@ html, body {
   scrollbar-gutter: stable overlay;
 }
 
-*/
+
 
 html, body {
   color: white;

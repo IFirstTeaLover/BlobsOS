@@ -209,7 +209,7 @@ let inputAnswer = undefined;
 // sys.addLine("### Made by [color=rgb(100, 175, 255)]Allucat1000.[/color] Forked by [color=rgba(240, 74, 74, 1)]BulbaSprout.[/color]");
 // sys.addLine("Use the \"hpkg install\" to install a package. \n Make sure to update your packages often using \"hpkg update\".")
 const currentVer = "0.5.0"
-const verBranch = "main";
+const verBranch = "dev";
 // if (verBranch === "dev") {
 //   sys.addLine("### [line=yellow]Hold up![/line]")
 //   sys.addLine("### [line=yellow]The dev branch is in use currently! Be ready for bugs![/line]")

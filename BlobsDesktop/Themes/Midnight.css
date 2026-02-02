@@ -216,7 +216,7 @@ input[type="checkbox"]:checked {
   background-color: rgba(30, 30, 30, 0.15);
 }
 
-/* Scrollbars (disabled for now)
+
 
 ::-webkit-scrollbar {
   width: 12px;              
@@ -245,7 +245,6 @@ html, body {
   scrollbar-gutter: stable overlay;
 }
 
-*/
 
 html, body {
   color: white;

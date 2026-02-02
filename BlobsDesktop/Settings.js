@@ -15,9 +15,6 @@ async function mainScreen() {
         gap: 1.5%;    `
 
 
-    mainScreenDiv.querySelectorAll("button").forEach(btn => {
-        btn.style = `flex: 0 0 33.333%;`
-    });
 
     //append window and title
     document.body.append(mainScreenDiv);
@@ -42,7 +39,7 @@ async function newTab(name, icon, mainScreenDiv, func) {
 
     tab.append(tabIcon, tabLabel);
 
-    tab.style = `flex: 0 0 33.3333%;
+    tab.style = `flex: 0 0 32%;
                  height: calc(50% - 0.75%);`
 
     tabLabel.style.cursor = "pointer";

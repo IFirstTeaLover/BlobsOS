@@ -10,7 +10,7 @@ async function mainScreen() {
         flex-wrap: wrap;
         width: 100%;
         height: 100%;
-        padding: 1.25rem;
+        padding: 1.5%;
         box-sizing: border-box;
         gap: 1.5%;    `
 
@@ -22,163 +22,17 @@ async function mainScreen() {
     //append window and title
     document.body.append(mainScreenDiv);
 
-    await newTab("Wallpapers", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>', mainScreenDiv)
-    //create wallpapers button and icon
-    // const wallpapersTab = document.createElement("button");
-    // const wallpapersTabIcon = document.createElement("img");
-    // //apply the icon
-    // const wTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>';
-    // wallpapersTabIcon.style = "margin-right: 0.33em;"
-
-    // setAttrs(wallpapersTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(wTabIconSrc) });
-
-    // const wTabLabel = document.createElement("label"); // create label of tab wallpaper
-    // wTabLabel.textContent = "Wallpapers"; //set label name
-    // //append icon and label
-    // wallpapersTab.append(wallpapersTabIcon);
-    // wallpapersTab.append(wTabLabel);
-
-    // wTabLabel.style.cursor = "pointer"; //make css change cursor to pointer on hover
-    // //make icon and label centered
-    // wallpapersTab.style.display = "flex";
-    // wallpapersTab.style.justifyContent = "center";
-
-    // wallpapersTab.style.padding = "1.25em";//increase tab size
-    // wallpapersTab.style.margin = "1em auto";//make icon and label smaller
-    // wallpapersTab.style.width = "98%";
-
-    // mainScreenDiv.append(wallpapersTab);//append tab to window
-
-    // //ts pmo ngl
-    // wallpapersTab.onclick = () => {
-    //     mainScreenDiv.remove();
-    //     wallpapersTabLoad();
-    // };
+    await newTab("Wallpapers", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>', mainScreenDiv, wallpapersTabLoad)
+    await newTab("Customization", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings2-icon lucide-settings-2"><path d="M14 17H5"/><path d="M19 7h-9"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>', mainScreenDiv, customizationTabLoad)
+    await newTab("Dock", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dock-icon lucide-dock"><path d="M2 8h20"/><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 16h12"/></svg>', mainScreenDiv, dockTabLoad)
+    await newTab("Boot Apps", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-app-window-mac-icon lucide-app-window-mac"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/></svg>', mainScreenDiv, appTabLoad)
+    await newTab("Themes", "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-paintbrush-icon lucide-paintbrush'><path d='m14.622 17.897-10.68-2.913'/><path d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z'/><path d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15'/></svg>", mainScreenDiv, themeTabLoad)
 
 
-    const customizationTab = document.createElement("button");
-    const customizationTabIcon = document.createElement("img");
-
-    const cTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings2-icon lucide-settings-2"><path d="M14 17H5"/><path d="M19 7h-9"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>';
-    customizationTabIcon.style = "margin-right: 0.2em;"
-
-    setAttrs(customizationTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(cTabIconSrc) });
-
-    const cTabLabel = document.createElement("label");
-    cTabLabel.textContent = "Customization"
-
-    customizationTab.append(customizationTabIcon);
-    customizationTab.append(cTabLabel);
-
-    cTabLabel.style.cursor = "pointer";
-
-    customizationTab.style.display = "flex";
-    customizationTab.style.justifyContent = "center";
-
-    customizationTab.style.padding = "1.25em";
-    customizationTab.style.margin = "1em auto";
-    customizationTab.style.width = "98%";
-
-    mainScreenDiv.append(customizationTab);
-    customizationTab.onclick = () => {
-        mainScreenDiv.remove();
-        customizationTabLoad();
-    };
-
-    const dockTab = document.createElement("button");
-    const dockTabIcon = document.createElement("img");
-
-    const dTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dock-icon lucide-dock"><path d="M2 8h20"/><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 16h12"/></svg>';
-    dockTabIcon.style = "margin-right: 0.33em;"
-
-    setAttrs(dockTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(dTabIconSrc) });
-
-    const dTabLabel = document.createElement("label");
-    dTabLabel.textContent = "Dock"
-
-    dockTab.append(dockTabIcon);
-    dockTab.append(dTabLabel);
-
-    dTabLabel.style.cursor = "pointer"
-
-    dockTab.style.display = "flex"
-    dockTab.style.justifyContent = "center"
-
-    dockTab.style.padding = "1.25em"
-
-    dockTab.style.margin = "1em auto";
-    dockTab.style.width = "98%";
-
-    mainScreenDiv.append(dockTab);
-
-    dockTab.onclick = () => {
-        mainScreenDiv.remove();
-        dockTabLoad();
-    };
-
-
-    const appTab = document.createElement("button");
-    const appTabIcon = document.createElement("img");
-
-    const appTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-app-window-mac-icon lucide-app-window-mac"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/></svg>';
-    appTabIcon.style = "margin-right: 0.33em;"
-
-    setAttrs(appTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(appTabIconSrc) });
-
-    const appTabLabel = document.createElement("label");
-    appTabLabel.textContent = "Boot Apps"
-
-    appTab.append(appTabIcon);
-    appTab.append(appTabLabel);
-
-    appTabLabel.style.cursor = "pointer"
-
-    appTab.style.display = "flex"
-    appTab.style.justifyContent = "center"
-
-    appTab.style.padding = "1.25em"
-    appTab.style.margin = "1em auto";
-    appTab.style.width = "98%";
-
-    mainScreenDiv.append(appTab);
-    appTab.onclick = () => {
-        mainScreenDiv.remove();
-        appTabLoad();
-    };
-
-    const themeTab = document.createElement("button");
-    const themeTabIcon = document.createElement("img");
-
-    const themeTabIconSrc = "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-paintbrush-icon lucide-paintbrush'><path d='m14.622 17.897-10.68-2.913'/><path d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z'/><path d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15'/></svg>";
-    themeTabIcon.style = "margin-right: 0.33em;"
-
-    setAttrs(themeTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(themeTabIconSrc) });
-
-    const themeTabLabel = document.createElement("label");
-    themeTabLabel.textContent = "Themes"
-
-    themeTab.append(themeTabIcon);
-    themeTab.append(themeTabLabel);
-
-    themeTabLabel.style.cursor = "pointer"
-
-    themeTab.style.display = "flex"
-    themeTab.style.justifyContent = "center"
-
-    themeTab.style.padding = "1.25em"
-    themeTab.style.margin = "1em auto";
-    themeTab.style.width = "98%";
-
-    mainScreenDiv.append(themeTab);
-
-    themeTab.onclick = () => {
-        mainScreenDiv.remove();
-        themeTabLoad();
-    };
 }
 
 
-async function newTab(name, icon, mainScreenDiv) {
+async function newTab(name, icon, mainScreenDiv, func) {
     const tab = document.createElement("button");
     const tabIcon = document.createElement("img");
     const tabLabel = document.createElement("label");
@@ -197,7 +51,7 @@ async function newTab(name, icon, mainScreenDiv) {
 
     tab.onclick = () => {
         mainScreenDiv.remove();
-        wallpapersTabLoad();
+        func();
     };
 }
 

@@ -84,7 +84,7 @@ async function cleanOobe() {
             document.getElementsByClassName("install")[0].style.display = "block";
             console.log("Trying to initialize")
 
-            init(false)
+            await init(false)
             console.log("Initialized!")
             break;
     }

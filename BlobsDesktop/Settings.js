@@ -33,8 +33,8 @@ async function newTab(name, icon, mainScreenDiv, func) {
     const tab = document.createElement("button");
     const tabIcon = document.createElement("img");
     const tabLabel = document.createElement("label");
-
-    tabIcon.src = "data:image/svg+xml;utf8," + encodeURIComponent(icon);
+    console.error("This code is new!!")
+    tabIcon.src = icon;
     tabLabel.textContent = name;
 
     tab.append(tabIcon, tabLabel);

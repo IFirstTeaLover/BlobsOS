@@ -6,17 +6,13 @@ async function mainScreen() {
     const mainScreenDiv = document.createElement("div"); //create app window
 
     mainScreenDiv.style = `
-        display: "flex",
-    flexWrap: "wrap",
-
-    width: "100%",
-    height: "100%",
-
-    padding: "clamp(16px, 2vw, 28px)",
-    gap: "clamp(12px, 2vw, 20px)",
-
-    boxSizing: "border-box",
-    alignContent: "flex-start"`
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 100%;
+        padding: 1.25rem;
+        box-sizing: border-box;
+        gap: 1.5%;    `
 
 
     mainScreenDiv.querySelectorAll("button").forEach(btn => {
@@ -192,19 +188,8 @@ async function newTab(name, icon, mainScreenDiv) {
 
     tab.append(tabIcon, tabLabel);
 
-    Object.assign(tab.style, {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-
-        flex: "0 0 33.333%",
-        boxSizing: "border-box",
-
-        padding: "clamp(12px, 2vw, 20px)",
-        borderRadius: "12px",
-        cursor: "pointer"
-    });
+    tab.style = `flex: 0 0 33.3333%;
+                 height: calc(50% - 0.75%);`
 
     tabLabel.style.cursor = "pointer";
 

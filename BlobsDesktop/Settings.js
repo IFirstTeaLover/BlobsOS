@@ -6,51 +6,58 @@ async function mainScreen() {
     const mainScreenDiv = document.createElement("div"); //create app window
 
     mainScreenDiv.style = `
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        grid-column-gap: 12px;
-        grid-row-gap: 12px; padding: 1.25em;`
+        display: "flex",
+    flexWrap: "wrap",
 
-    
+    width: "100%",
+    height: "100%",
+
+    padding: "clamp(16px, 2vw, 28px)",
+    gap: "clamp(12px, 2vw, 20px)",
+
+    boxSizing: "border-box",
+    alignContent: "flex-start"`
+
+
     mainScreenDiv.querySelectorAll("button").forEach(btn => {
-        btn.style.justifySelf = "center";
+        btn.style = `flex: 0 0 33.333%;`
     });
 
     //append window and title
     document.body.append(mainScreenDiv);
 
+    await newTab("Wallpapers", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>')
     //create wallpapers button and icon
-    const wallpapersTab = document.createElement("button");
-    const wallpapersTabIcon = document.createElement("img");
-    //apply the icon
-    const wTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>';
-    wallpapersTabIcon.style = "margin-right: 0.33em;"
+    // const wallpapersTab = document.createElement("button");
+    // const wallpapersTabIcon = document.createElement("img");
+    // //apply the icon
+    // const wTabIconSrc = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>';
+    // wallpapersTabIcon.style = "margin-right: 0.33em;"
 
-    setAttrs(wallpapersTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(wTabIconSrc) });
+    // setAttrs(wallpapersTabIcon, { src: "data:image/svg+xml;utf8," + encodeURIComponent(wTabIconSrc) });
 
-    const wTabLabel = document.createElement("label"); // create label of tab wallpaper
-    wTabLabel.textContent = "Wallpapers"; //set label name
-    //append icon and label
-    wallpapersTab.append(wallpapersTabIcon);
-    wallpapersTab.append(wTabLabel);
+    // const wTabLabel = document.createElement("label"); // create label of tab wallpaper
+    // wTabLabel.textContent = "Wallpapers"; //set label name
+    // //append icon and label
+    // wallpapersTab.append(wallpapersTabIcon);
+    // wallpapersTab.append(wTabLabel);
 
-    wTabLabel.style.cursor = "pointer"; //make css change cursor to pointer on hover
-    //make icon and label centered
-    wallpapersTab.style.display = "flex";
-    wallpapersTab.style.justifyContent = "center";
+    // wTabLabel.style.cursor = "pointer"; //make css change cursor to pointer on hover
+    // //make icon and label centered
+    // wallpapersTab.style.display = "flex";
+    // wallpapersTab.style.justifyContent = "center";
 
-    wallpapersTab.style.padding = "1.25em";//increase tab size
-    wallpapersTab.style.margin = "1em auto";//make icon and label smaller
-    wallpapersTab.style.width = "98%";
+    // wallpapersTab.style.padding = "1.25em";//increase tab size
+    // wallpapersTab.style.margin = "1em auto";//make icon and label smaller
+    // wallpapersTab.style.width = "98%";
 
-    mainScreenDiv.append(wallpapersTab);//append tab to window
+    // mainScreenDiv.append(wallpapersTab);//append tab to window
 
-    //ts pmo ngl
-    wallpapersTab.onclick = () => {
-        mainScreenDiv.remove();
-        wallpapersTabLoad();
-    };
+    // //ts pmo ngl
+    // wallpapersTab.onclick = () => {
+    //     mainScreenDiv.remove();
+    //     wallpapersTabLoad();
+    // };
 
 
     const customizationTab = document.createElement("button");
@@ -173,6 +180,43 @@ async function mainScreen() {
         themeTabLoad();
     };
 }
+
+
+async function newTab(name, icon) {
+    const tab = document.createElement("button");
+    const tabIcon = document.createElement("img");
+    const tabLabel = document.createElement("label");
+
+    tabIcon.src = "data:image/svg+xml;utf8," + encodeURIComponent(icon);
+    tabLabel.textContent = name;
+
+    tab.append(tabIcon, tabLabel);
+
+    Object.assign(tab.style, {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+
+        flex: "0 0 33.333%",
+        boxSizing: "border-box",
+
+        padding: "clamp(12px, 2vw, 20px)",
+        borderRadius: "12px",
+        cursor: "pointer"
+    });
+
+    tabLabel.style.cursor = "pointer";
+
+    mainScreenDiv.append(tab);
+
+    tab.onclick = () => {
+        mainScreenDiv.remove();
+        wallpapersTabLoad();
+    };
+}
+
+
 async function wallpapersTabLoad() {
     await blobsAPI.setTitle("Settings - Wallpapers");
     const mainScreenDiv = document.createElement("div");

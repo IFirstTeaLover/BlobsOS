@@ -4,7 +4,6 @@ const inputs = Array.from(document.getElementsByTagName("input"));
 const selection = document.getElementsByTagName("input");
 const next = document.getElementById("nextButton");
 const sw = Array.from(document.querySelectorAll(".settingsSwitch"));
-const ISDEV = true;
 
 sw.forEach(e => { e.classList.add("hidden") })
 
@@ -108,8 +107,7 @@ function getConfig() {
     return datasetButtons;
 }
 
-
-if (ISDEV) {
+if (verBranch === "dev") {
     oobeStage++
     cleanOobe()
     oobeStageSwitch()

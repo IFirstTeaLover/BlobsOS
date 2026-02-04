@@ -41,7 +41,7 @@ window.sys = {
   async import(name) {
     try {
       await sys.addLine(`[line=blue]Downloading ${name}...[/line]`)
-      const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/modules/${name}.js?v=${Date.now()}`;
+      const url = `./modules/${name}.js?v=${Date.now()}`;
       const response = await fetch(url);
 
       if (response.ok) {
@@ -92,13 +92,13 @@ window.sys = {
     const coloredText = parseColorsAndBackgrounds(escapedText);
     const html = marked.parse(coloredText);
 
-    // const termContentDiv = document.createElement('div');
-    // termContentDiv.innerHTML = html;
-    // termDiv.appendChild(termContentDiv);
-    // termDiv.scrollTop = termDiv.scrollHeight;
-    // if (textInput) {
-    //   textInput.scroll();
-    // }
+    const termContentDiv = document.createElement('div');
+    termContentDiv.innerHTML = html;
+    termDiv.appendChild(termContentDiv);
+    termDiv.scrollTop = termDiv.scrollHeight;
+    if (textInput) {
+      textInput.scroll();
+    }
 
   }
 }
@@ -424,7 +424,7 @@ const internalFS = {
   async downloadPackage(pkgName) {
     try {
       await sys.addLine(`[line=blue]Downloading ${pkgName}...[/line]`);
-      const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/packages/${pkgName}.js?v=${Date.now()}`;
+      const url = `./packages/${pkgName}.js?v=${Date.now()}`;
       const response = await fetch(url);
 
       if (response.ok) {
@@ -549,7 +549,7 @@ async function callCMD(input, params) {
         }
         if (params[1].toLowerCase())
           await internalFS.downloadPackage(params[1].toLowerCase());
-        const manifestFetch = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/packages/${params[1].toLowerCase()}.js.config?v=${Date.now()}`);
+        const manifestFetch = await fetch(`./packages/${params[1].toLowerCase()}.js.config?v=${Date.now()}`);
         let data
         if (manifestFetch.ok) {
           data = await manifestFetch.text()
@@ -571,7 +571,7 @@ async function callCMD(input, params) {
           if (packageList[i].endsWith(".config")) return;
           let oldManifest = await internalFS.getFile(`${packageList[i]}.config`);
           let updatePackage = false;
-          const manifestFetch = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/packages/${packageList[i].replace("/system/packages/", "")}.config?v=${Date.now()}`);
+          const manifestFetch = await fetch(`./packages/${packageList[i].replace("/system/packages/", "")}.config?v=${Date.now()}`);
           if (manifestFetch.ok) {
             let data = await manifestFetch.text()
             data = JSON.parse(data);
@@ -594,7 +594,7 @@ async function callCMD(input, params) {
 
         }
         try {
-          const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
+          const url = `./system/terminalcmd.js?v=${Date.now()}`;
           const response = await fetch(url);
 
           if (response.ok) {
@@ -716,7 +716,7 @@ async function init(reinstall) {
       }));
 
       try {
-        const url = `https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/${verBranch}/system/terminalcmd.js?v=${Date.now()}`;
+        const url = `./system/terminalcmd.js?v=${Date.now()}`;
         const response = await fetch(url);
 
         if (response.ok) {
@@ -897,11 +897,11 @@ async function isSystemInstalled() {
 
   if (!rootDir) { return false };
   if (rootDir.includes("/home") || rootDir.includes("/manifest.json") || rootDir.includes("/system")) {
-    if (rootDir.includes("/home") && rootDir.includes("/manifest.json") && rootDir.includes("/system")) {
+    if (rootDir.includes("/home") && rootDir.includes("/system")) {
       return true;
     } else {
       if (rootDir.includes("/system/config")) {
-        return false
+        return true
       } else
         return false //fuckoff vro
     }

@@ -152,10 +152,8 @@ input[type="checkbox"]:checked {
   height: 385px;
   background: rgba(0, 0, 0, 0.65);
   position: absolute;
-  border-radius: 1em;
-  border: 2.5px;
-  border-style: solid;
-  border-color: #22222289;
+  border-radius: 0 1.5em 0 0;
+  border: rgba(255, 255, 255, 0.65) 1.5px solid;
   left: 3%;
   bottom: 7.5em;
   opacity: 0;

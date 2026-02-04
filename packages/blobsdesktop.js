@@ -61,7 +61,6 @@ window.blobsdesktop = (() => {
     }
     const dataURIToBlob = async (dataURI) => {
         const [meta, base64Data] = dataURI.split(',');
-
         const mimeMatch = meta.match(/:(.*?);/);
         const mime = mimeMatch ? mimeMatch[1] : 'application/octet-stream';
 
@@ -96,9 +95,9 @@ window.blobsdesktop = (() => {
         await sys.addLine("Installing system apps...");
         const apps = ["Settings.js", "App Store.js", "Calculator.js", "File Manager.js", "Terminal.js", "Processes.js", "Preview.js", "Logs.js"];
         for (const app of apps) {
-            await downloadApp(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/${app}`, `/home/applications/${app}`);
+            await downloadApp(`./BlobsDesktop/${app}`, `/home/applications/${app}`);
         }
-        await downloadApp(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/Desktop.js`, "/system/coreapplications/.Desktop.js");
+        await downloadApp(`./BlobsDesktop/Desktop.js`, "/system/coreapplications/.Desktop.js");
 
         if (true) {
             await internalFS.createPath("/home/applications/Settings.js.icon", "file", `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`);
@@ -128,33 +127,33 @@ window.blobsdesktop = (() => {
 
         await sys.addLine("Installing app modules...");
 
-        const response4 = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/blobsAPIModules/contextmenu.js`);
+        const response4 = await fetch(`./BlobsDesktop/blobsAPIModules/contextmenu.js`);
         if (response4.ok) {
             const data = await response4.text();
             await internalFS.createPath("/system/env/modules/contextmenu.js", "file", data);
         }
-        const response5 = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/blobsAPIModules/html.js`);
+        const response5 = await fetch(`./BlobsDesktop/blobsAPIModules/html.js`);
         if (response5.ok) {
             const data = await response5.text();
             await internalFS.createPath("/system/env/modules/html.js", "file", data);
         }
         await sys.addLine("[line=blue]Downloading and installing wallpapers...[/line]")
-        const wallpapers = ["Chilly Mountain.png", "Peaceful Landscape.png", "Chaotic Creek.png", "Forest Landscape.png", "Deep Space.jpg"]; // Credits to https://wallpaperaccess.com/real-space-hd-desktop (image #5)
+        const wallpapers = ["Chilly Mountain.png", "Peaceful Landscape.png", "Chaotic Creek.png", "Forest Landscape.png", "Deep Space.jpg", "Blobs.png", "fog.jpg", "grassy.jpg"]; // Credits to https://wallpaperaccess.com/real-space-hd-desktop (image #5)
         for (const wallpaper of wallpapers) {
             if (!await internalFS.getFile(`/system/env/wallpapers/${wallpaper}`)) {
-                await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/Wallpapers/${wallpaper}`, `/system/env/wallpapers/${wallpaper}`);
+                await fetchAndStoreImage(`./Wallpapers/${wallpaper}`, `/system/env/wallpapers/${wallpaper}`);
             }
             if (!await internalFS.getFile(`/system/env/wallpapers/preview/${wallpaper}`)) {
-                await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/Wallpapers/Preview/${wallpaper}`, `/system/env/wallpapers/preview/${wallpaper}`);
+                await fetchAndStoreImage(`./Wallpapers/Preview/${wallpaper}`, `/system/env/wallpapers/preview/${wallpaper}`);
             }
         }
 
-        const logoSuccess = await fetchAndStoreImage(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsLogo.png`, "/system/env/assets/BlobsLogo.png");
+        const logoSuccess = await fetchAndStoreImage(`./BlobsLogo.png`, "/system/env/assets/BlobsLogo.png");
         await sys.addLine("Wallpapers and logo fetched and installed!");
         sys.addLine("[line=blue]Installing styles...[/line]");
 
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt")) {
-            await internalFS.createPath("/system/env/systemconfig/settings/customization/wallpaperchosen.txt", "file", "/system/env/wallpapers/Chilly Mountain.png")
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/wallpaperchosen.txt", "file", "/system/env/wallpapers/Blobs.png")
         }
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/bgblur.txt")) {
             await internalFS.createPath("/system/env/systemconfig/settings/customization/bgblur.txt", "file", "3.5")
@@ -186,7 +185,7 @@ window.blobsdesktop = (() => {
         if (!await internalFS.getFile("/system/env/systemStyles.css")) {
             styleDownloadSuccess = await new Promise(async (resolve, reject) => {
                 try {
-                    const response = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/Themes/Dark%20Mode.css`);
+                    const response = await fetch(`./BlobsDesktop/Themes/Dark%20Mode.css`);
                     if (response.ok) {
                         const text = await response.text();
                         await internalFS.createPath("/system/env/systemStyles.css", "file", text);
@@ -491,9 +490,9 @@ window.blobsdesktop = (() => {
         iframe.dataset.digitId = digits;
         processArrayList.push(digits)
         iframe.style.width = "calc(100%)";
-        iframe.style.height = "calc(100%)";
+        iframe.style.height = "calc(100% - 42px)";
         iframe.style.position = "absolute";
-        iframe.style.top = "0";
+        iframe.style.bottom = "42px";
         iframe.style.border = "none";
         iframe.sandbox = "allow-scripts allow-pointer-lock";
         container.appendChild(iframe);
@@ -1777,7 +1776,7 @@ window.blobsdesktop = (() => {
         titleBar.className = "titlebar";
         const container = quantum.document.createElement("div");
         container.className = "app-container";
-        container.style = `width: 100%; height: calc(96.5%); overflow: auto; position: relative;`;
+        container.style = `width: 100%; height: calc(100%); overflow: auto; position: relative;`;
         const closeButton = quantum.document.createElement("button");
         closeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
         closeButton.style = `
@@ -2002,8 +2001,8 @@ window.blobsdesktop = (() => {
                     startMenuDiv = quantum.document.createElement("div");
                     startMenuDiv.id = "startMenuDiv";
                     if (docked) {
-                        startMenuDiv.style.left = "1.5%";
-                        startMenuDiv.style.bottom = "5em";
+                        startMenuDiv.style.left = "0";
+                        startMenuDiv.style.bottom = "4em";
                     }
                     desktop.append(startMenuDiv);
                 }
@@ -2407,7 +2406,7 @@ window.blobsdesktop = (() => {
                 const code = await internalFS.getFile("/system/packages/blobsdesktop.js");
                 const checksum = await CryptoJS.MD5(code).toString()
 
-                const response = await fetch(`https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/packages/blobsdesktop.js`);
+                const response = await fetch(`./blobsdesktop.js`);
                 if (response.ok) {
                     const newCode = await response.text();
                     const newChecksum = CryptoJS.MD5(newCode).toString();

@@ -11,7 +11,7 @@ document.body.append(loadingText);
 // App loading
 const appList = document.createElement("div");
 document.body.append(appList)
-const response = await fetch("./BlobsDesktop/AppStore/AppList.json");
+const response = await fetch("https://raw.githubusercontent.com/IFirstTeaLover/BlobsOS/main/BlobsDesktop/AppStore/AppList.json");
 if (response.ok) {
     let list;
     try {

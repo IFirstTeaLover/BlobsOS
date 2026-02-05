@@ -11,11 +11,11 @@ blobsAPI.setWindowPosition("1px", "1px");
 console.log("hi")
 let config = await blobsAPI.applicationStorageRead("config.json");
 if (!config) {
-    config = `{"transition":"0.1s", "padding":"10", "reservedHeight":"7em", "dockPos":"bottom"}`;
+    config = `{"transition":"0.1s", "padding":"10", "reservedHeight":"4em", "dockPos":"bottom"}`;
     await blobsAPI.applicationStorageWrite("config.json", "file", config);
 }
 config = JSON.parse(config);
-if (!config.reservedHeight) { config.reservedHeight = "7em"; config.dockPos = "bottom"; await blobsAPI.applicationStorageWrite("config.json", "file", JSON.stringify(config)); }
+if (!config.reservedHeight) { config.reservedHeight = "4em"; config.dockPos = "bottom"; await blobsAPI.applicationStorageWrite("config.json", "file", JSON.stringify(config)); }
 
 let [rawWinArrList, winDigitList] = JSON.parse(await blobsAPI.getProcesses());
 async function processFetch () {

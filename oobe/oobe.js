@@ -1,4 +1,4 @@
-let toBeInstalled = Array(4).fill(false);
+let toBeInstalled = Array(5).fill(false);
 let oobeStage = 1;
 const inputs = Array.from(document.getElementsByTagName("input"));
 const selection = document.getElementsByTagName("input");
@@ -9,7 +9,7 @@ sw.forEach(e => { e.classList.add("hidden") })
 
 inputs.forEach((e, index) => {
     e.addEventListener("change", () => {
-        toBeInstalled[index] = e.checked;
+        toBeInstalled[index-1] = e.checked;
     })
 })
 

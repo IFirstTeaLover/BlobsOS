@@ -93,7 +93,13 @@ window.blobsdesktop = (() => {
         await internalFS.createPath("/system/env/config.json", "file", JSON.stringify(bootConfig));
         await sys.addLine("Boot config created!");
         await sys.addLine("Installing system apps...");
-        const apps = ["Settings.js", "App Store.js", "Calculator.js", "File Manager.js", "Terminal.js", "Processes.js", "Preview.js", "Logs.js"];
+        let apps = ["Settings.js", "App Store.js", "File Manager.js", "Terminal.js", "Processes.js", "Preview.js", "Logs.js"];
+        const thisConfig = await internalFS.getFile("/system/config")
+        const wantedApps = thisConfig.apps
+        if (wantedApps[0] == true) { apps.push("Calculator.js") }
+        // if (wantedApps[1] == true){apps.push("Notepad.js")}
+        // if (wantedApps[2] == true){apps.push("Paint.js")}
+        // if (wantedApps[3] == true){apps.push("Browser.js")}
         for (const app of apps) {
             await downloadApp(`./BlobsDesktop/${app}`, `/home/applications/${app}`);
         }
@@ -163,20 +169,37 @@ window.blobsdesktop = (() => {
         const logoSuccess = await fetchAndStoreImage(`./BlobsLogo.png`, "/system/env/assets/BlobsLogo.png");
         await sys.addLine("Wallpapers and logo fetched and installed!");
         sys.addLine("[line=blue]Installing styles...[/line]");
+        const oobeConfig = await internalFS.getFile("/system/config")
+        const potatoMode = oobeConfig.apps[4]
+        const config = oobeConfig.config
 
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt")) {
             await internalFS.createPath("/system/env/systemconfig/settings/customization/wallpaperchosen.txt", "file", "/system/env/wallpapers/Blobs.png")
         }
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/bgblur.txt")) {
-            await internalFS.createPath("/system/env/systemconfig/settings/customization/bgblur.txt", "file", "3.5")
+            if (!potatoMode) {
+                await internalFS.createPath("/system/env/systemconfig/settings/customization/bgblur.txt", "file", "3.5")
+            }else{
+                await internalFS.createPath("/system/env/systemconfig/settings/customization/bgblur.txt", "file", "0")
+            }
+
         }
 
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/bgopac.txt")) {
-            await internalFS.createPath("/system/env/systemconfig/settings/customization/bgopac.txt", "file", "0.85")
+            if (!potatoMode){
+                await internalFS.createPath("/system/env/systemconfig/settings/customization/bgopac.txt", "file", "0.85")
+            }else{
+                await internalFS.createPath("/system/env/systemconfig/settings/customization/bgopac.txt", "file", "1")
+            }
+            
         }
 
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/dockopac.txt")) {
-            await internalFS.createPath("/system/env/systemconfig/settings/customization/dockopac.txt", "file", "0.7")
+            if (!potatoMode) {
+                await internalFS.createPath("/system/env/systemconfig/settings/customization/dockopac.txt", "file", "0.7")
+            }else{
+                await internalFS.createPath("/system/env/systemconfig/settings/customization/dockopac.txt", "file", "1")
+            }
         }
 
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/windowbordercolor.txt")) {
@@ -184,7 +207,11 @@ window.blobsdesktop = (() => {
         }
 
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/dockedTaskbar.txt")) {
-            await internalFS.createPath("/system/env/systemconfig/settings/customization/dockedTaskbar.txt", "file", true)
+            let s = true
+            if (config[0] == 1){
+                s = false
+            }
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/dockedTaskbar.txt", "file", s)
         }
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/displaySeconds.txt")) {
             await internalFS.createPath("/system/env/systemconfig/settings/customization/displaySeconds.txt", "file", false)
@@ -200,7 +227,9 @@ window.blobsdesktop = (() => {
         if (!await internalFS.getFile("/system/env/systemStyles.css")) {
             styleDownloadSuccess = await new Promise(async (resolve, reject) => {
                 try {
-                    const response = await fetch(`./BlobsDesktop/Themes/Dark%20Mode.css`);
+                    let toFetch = `./BlobsDesktop/Themes/Dark%20Mode.css`
+                    if(config[1] == 0){toFetch = `./BlobsDesktop/Themes/Light%20Mode.css`}
+                    const response = await fetch(toFetch);
                     if (response.ok) {
                         const text = await response.text();
                         await internalFS.createPath("/system/env/systemStyles.css", "file", text);
@@ -2132,24 +2161,29 @@ window.blobsdesktop = (() => {
             }
             const dock = quantum.document.createElement("div");
             const wallpaperChosen = await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt");
-            const imageDataURI = await internalFS.getFile(wallpaperChosen);
-            const blob = await dataURIToBlob(imageDataURI);
-            const imageData = URL.createObjectURL(blob);
-            quantum.document.body.style.margin = "0";
-            const wallpaperExt = wallpaperChosen.split(".").pop()
-            if (wallpaperExt === "mp4") {
-                const video = quantum.document.createElement("video");
-                video.src = imageData;
-                video.id = "wallpaperVideo";
-                video.autoplay = true;
-                video.muted = true;
-                video.loop = true;
-                video.playsInline = true;
-                video.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;";
-                desktop.append(video);
-                desktop.style = `width: 100%; height: 100%; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
-            } else {
-                desktop.style = `width: 100%; height: 100%; background-image: url(${imageData}); background-size: cover; background-position: center; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
+            const isColor = wallpaperChosen.includes("#");
+            if (!isColor) {
+                const imageDataURI = await internalFS.getFile(wallpaperChosen);
+                const blob = await dataURIToBlob(imageDataURI);
+                const imageData = URL.createObjectURL(blob);
+                quantum.document.body.style.margin = "0";
+                const wallpaperExt = wallpaperChosen.split(".").pop()
+                if (wallpaperExt === "mp4") {
+                    const video = quantum.document.createElement("video");
+                    video.src = imageData;
+                    video.id = "wallpaperVideo";
+                    video.autoplay = true;
+                    video.muted = true;
+                    video.loop = true;
+                    video.playsInline = true;
+                    video.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;";
+                    desktop.append(video);
+                    desktop.style = `width: 100%; height: 100%; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
+                } else if (!isColor) {
+                    desktop.style = `width: 100%; height: 100%; background-image: url(${imageData}); background-size: cover; background-position: center; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
+                }
+            } else if (isColor) {
+                desktop.style = `width: 100%; height: 100%; background-color: ${wallpaperChosen}; background-size: cover; background-position: center; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
             }
 
             quantum.document.body.style.userSelect = "none";

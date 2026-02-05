@@ -109,15 +109,6 @@ async function wallpapersTabLoad() {
 
     const wallpaperListDiv = document.createElement("div");
 
-    const backButton = document.createElement("button");
-    backButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>';
-    backButton.style = "padding: 1em; position: fixed; left: 0.5em; top: 0.5em; display: flex; width: 45px; height: 45px; align-items: center; justify-content: center;";
-
-    mainScreenDiv.append(backButton);
-    backButton.onclick = async () => {
-        mainScreenDiv.remove()
-        await mainScreen();
-    };
 
     const switchHolder = await blobsAPI.getFile("/system/env/modules/switch/classicSwitch.html")
     mainScreenDiv.innerHTML += switchHolder
@@ -193,17 +184,16 @@ async function wallpapersTabLoad() {
     setAttrs(importImg, { src: "data:image/svg+xml;utf8," + encodeURIComponent(iconSrc) })
 
     const importButton = document.createElement("button");
-    importButton.width = "25%";
+    importButton.width = "90%";
     importButton.style.margin = "1em"
-        ;
+
     importButton.style.overflow = "hidden"
-        ;
-    importButton.style.minWidth = "200px"
-        ;
+
+    importButton.style.minWidth = "70%"
+
     importButton.style.flex = "1 0 100px";
-    importButton.style.maxWidth = "200px"
-        ;
-    importButton.style.aspectRatio = "16 / 9";
+    importButton.style.maxWidth = "90%"
+
 
     importButton.append(importImg);
     importButton.append(importText);
@@ -248,6 +238,16 @@ async function wallpapersTabLoad() {
     mainScreenDiv.append(colorListDiv)
 
     registerSwitches(mainScreenDiv, wallpaperListDiv, colorListDiv)
+
+    const backButton = document.createElement("button");
+    backButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>';
+    backButton.style = "padding: 1em; position: fixed; left: 0.5em; bottom: 0.5em; display: flex; width: 45px; height: 45px; align-items: center; justify-content: center; z-index: 100000;";
+
+    mainScreenDiv.append(backButton);
+    backButton.onclick = async () => {
+        mainScreenDiv.remove()
+        await mainScreen();
+    };
 }
 async function customizationTabLoad() {
     await blobsAPI.setTitle("Settings — Customization");

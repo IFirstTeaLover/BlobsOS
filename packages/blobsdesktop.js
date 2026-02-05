@@ -137,6 +137,18 @@ window.blobsdesktop = (() => {
             const data = await response5.text();
             await internalFS.createPath("/system/env/modules/html.js", "file", data);
         }
+
+        const switchModules = ["btn", "classicSwitch"]
+        switchModules.forEach(async (module) => {
+            sys.addLine("Installing " + module)
+            const response = await fetch(`./BlobsDesktop/blobsAPIModules/htmlModules/switch/${module}.html`);
+            if (response.ok) {
+                const data = await response.text();
+                console.log(`Writing to /system/env/modules/switch/${module}.html`)
+                await internalFS.createPath(`/system/env/modules/switch/${module}.html`, "file", data);
+            }
+        })
+
         await sys.addLine("[line=blue]Downloading and installing wallpapers...[/line]")
         const wallpapers = ["Chilly Mountain.png", "Peaceful Landscape.png", "Chaotic Creek.png", "Forest Landscape.png", "Deep Space.jpg", "Blobs.png", "fog.jpg", "grassy.jpg"]; // Credits to https://wallpaperaccess.com/real-space-hd-desktop (image #5)
         for (const wallpaper of wallpapers) {
@@ -176,6 +188,9 @@ window.blobsdesktop = (() => {
         }
         if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/displaySeconds.txt")) {
             await internalFS.createPath("/system/env/systemconfig/settings/customization/displaySeconds.txt", "file", false)
+        }
+        if (!await internalFS.getFile("/system/env/systemconfig/settings/customization/background.txt")) {
+            await internalFS.createPath("/system/env/systemconfig/settings/customization/background.txt", "file", "0")
         }
         const skipStyles = await internalFS.getFile("/system/env/noStyleUpdate.txt");
         if (!skipStyles) {
@@ -417,6 +432,7 @@ window.blobsdesktop = (() => {
         await sys.addLine("## --!--")
         await sys.addLine("### An unhandled exeption has occurred in BlobsDesktop and the system has been forced to halt.");
         await sys.addLine(`Error: ${error}`);
+        throw new Error(error)
         await sys.addLine("Try updating your packages (such as BlobsDesktop) using the command: \"hpkg update\".");
         await sys.addLine("If you still have issues, check if you have any custom scripts for BlobsDesktop. If you do, try booting BlobsDesktop without the scripts.");
         await sys.addLine("If you don't have any custom scripts or the issue is still occurring, please report this issue to me (for example through the HuopaOS or BlobsOS Github).");
@@ -2010,7 +2026,7 @@ window.blobsdesktop = (() => {
                 startMenuDiv.style.display = "block";
                 startMenuDiv.style.backdropFilter = `blur(${blur}px)`;
                 const shutdownButton = quantum.document.createElement("button");
-                shutdownButton.style = "background-color: transparent; border-color: rgba(105, 105, 105, 0.6); border-style: solid; border-radius: 0.5em; position: absolute; cursor: pointer; right: 0.5em; bottom: 0.5em; padding: 0.5em;"
+                shutdownButton.style = "background-color: transparent; border-color: rgba(105, 105, 105, 0.6); border-style: solid; f0.5em; position: absolute; cursor: pointer; right: 0.5em; bottom: 0.5em; padding: 0.5em;"
                 shutdownButton.textContent = "Shutdown";
                 shutdownButton.onclick = async () => {
                     const newWin = open(location, '_self');
@@ -2140,44 +2156,76 @@ window.blobsdesktop = (() => {
             desktop.id = "desktop";
             mainDiv.append(desktop);
             createSysDaemon("wallpaperUpdater", async () => {
-                let oldwallpaper = await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt");
+                let oldwallpaper =
+                    await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt");
+
                 async function loop() {
-                    const updateCheck = oldwallpaper === await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt");
-                    if (updateCheck === false) {
-                        oldwallpaper = await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt");
-                        const wallpaperChosen = await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt");
-                        const imageDataURI = await internalFS.getFile(wallpaperChosen);
-                        const blob = await dataURIToBlob(imageDataURI);
-                        const imageData = URL.createObjectURL(blob);
+                    const currentWallpaper =
+                        await internalFS.getFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt");
+
+                    if (currentWallpaper !== oldwallpaper && typeof currentWallpaper === "string") {
+                        oldwallpaper = currentWallpaper;
+
+                        const isColor = currentWallpaper.includes("#");
+                        let imageData = null;
+                        let wallpaperExt = null;
+
+                        if (!isColor) {
+                            const imageDataURI = await internalFS.getFile(currentWallpaper);
+                            if (imageDataURI) {
+                                const blob = await dataURIToBlob(imageDataURI);
+                                imageData = URL.createObjectURL(blob);
+                                wallpaperExt = currentWallpaper.split(".").pop();
+                            }
+                        }
+
+                        desktop.style.transition = "opacity 0.2s";
                         desktop.style.opacity = "0";
-                        setTimeout(async () => {
-                            const wallpaperExt = wallpaperChosen.split(".").pop()
+
+                        setTimeout(() => {
                             const oldVid = quantum.document.getElementById("wallpaperVideo");
                             if (oldVid) oldVid.remove();
-                            if (wallpaperExt === "mp4") {
+
+                            // reset background safely
+                            desktop.style.backgroundImage = "";
+                            desktop.style.backgroundColor = "";
+
+                            if (isColor) {
+                                desktop.style.backgroundColor = currentWallpaper;
+                            } else if (wallpaperExt === "mp4" && imageData) {
                                 const video = quantum.document.createElement("video");
-                                video.src = imageData;
                                 video.id = "wallpaperVideo";
+                                video.src = imageData;
                                 video.autoplay = true;
                                 video.muted = true;
                                 video.loop = true;
                                 video.playsInline = true;
-                                video.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;";
+                                video.style.position = "fixed";
+                                video.style.top = "0";
+                                video.style.left = "0";
+                                video.style.width = "100%";
+                                video.style.height = "100%";
+                                video.style.objectFit = "cover";
+                                video.style.zIndex = "-1";
                                 desktop.append(video);
-                                desktop.style = `width: 100%; height: 100%; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
-                            } else {
-                                desktop.style = `width: 100%; height: 100%; background-image: url(${imageData}); background-size: cover; background-position: center; font-family: sans-serif; opacity: 0; transition: 0.2s; font-family: "Figtree", sans-serif;`;
+                            } else if (imageData) {
+                                desktop.style.backgroundImage = `url(${imageData})`;
+                                desktop.style.backgroundSize = "cover";
+                                desktop.style.backgroundPosition = "center";
                             }
-                            setTimeout(async () => {
-                                desktop.style.opacity = "1";
-                            }, 250)
-                        }, 200)
 
+                            setTimeout(() => {
+                                desktop.style.opacity = "1";
+                            }, 50);
+                        }, 200);
                     }
+
                     setTimeout(loop, 250);
                 }
-                loop()
-            })
+
+                loop();
+            });
+
 
             const inputLabel = quantum.document.getElementById("inputLabel");
             inputLabel?.remove();

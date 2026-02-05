@@ -21,7 +21,7 @@ async function mainScreen() {
     //append window and title
     document.body.append(mainScreenDiv);
 
-    await newTab(32, "Wallpapers", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>', mainScreenDiv, wallpapersTabLoad)
+    await newTab(32, "Background", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallpaper-icon lucide-wallpaper"><circle cx="8" cy="9" r="2"/><path d="m9 17 6.1-6.1a2 2 0 0 1 2.81.01L22 15V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>', mainScreenDiv, wallpapersTabLoad)
     await newTab(32, "Customization", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings2-icon lucide-settings-2"><path d="M14 17H5"/><path d="M19 7h-9"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>', mainScreenDiv, customizationTabLoad)
     await newTab(32, "Dock", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dock-icon lucide-dock"><path d="M2 8h20"/><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 16h12"/></svg>', mainScreenDiv, dockTabLoad)
     await newTab(49, "Boot Apps", '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-app-window-mac-icon lucide-app-window-mac"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/></svg>', mainScreenDiv, appTabLoad)
@@ -61,25 +61,81 @@ async function newTab(flex, name, icon, mainScreenDiv, func) {
     };
 }
 
+async function registerSwitches(mainScreenDiv, wallpaperListDiv, colorListDiv) {
+    mainScreenDiv.querySelectorAll(".switch").forEach(switchEl => {
+        const buttons = switchEl.querySelectorAll(".switch-btn");
+        const indicator = switchEl.querySelector(".switch-indicator");
+
+        const count = buttons.length;
+        switchEl.style.setProperty("--count", count);
+
+        buttons.forEach(async (btn, index) => {
+            btn.addEventListener("click", () => {
+                buttons.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const buttonsActive = switchEl.querySelectorAll(".switch-btn.active")
+                buttonsActive.forEach(async (b) => {
+                    await blobsAPI.writeFile("/system/env/systemconfig/settings/customization/background.txt", "file", b.dataset.pos)
+                    if (b.dataset.pos == 1) {
+                        wallpaperListDiv.style.display = "none"
+                        mainScreenDiv.querySelector("h2").style.display = "none"
+
+                        colorListDiv.style.display = "flex"
+                        mainScreenDiv.querySelector("h3").style.display = "block"
+                    } else if (b.dataset.pos == 0) {
+                        wallpaperListDiv.style.display = "flex"
+                        mainScreenDiv.querySelector("h2").style.display = "block"
+
+                        colorListDiv.style.display = "none"
+                        mainScreenDiv.querySelector("h3").style.display = "none"
+                    }
+
+                })
+
+                indicator.style.transform =
+                    `translateX(${index * 100}%)`;
+            });
+        });
+
+    });
+}
+
 
 async function wallpapersTabLoad() {
     await blobsAPI.setTitle("Settings - Wallpapers");
     const mainScreenDiv = document.createElement("div");
-    const title = document.createElement("h1");
-    title.textContent = "Wallpapers";
-    title.style = "text-align: center;  margin: 1em;";
     document.body.append(mainScreenDiv);
-    mainScreenDiv.append(title);
+
+    const wallpaperListDiv = document.createElement("div");
 
     const backButton = document.createElement("button");
     backButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>';
-    backButton.style = "padding: 1em; position: fixed; left: 0.5vh; bottom: 0.5vh; display: flex; width: 45px; height: 45px; align-items: center; justify-content: center;";
+    backButton.style = "padding: 1em; position: fixed; left: 0.5em; top: 0.5em; display: flex; width: 45px; height: 45px; align-items: center; justify-content: center;";
 
     mainScreenDiv.append(backButton);
     backButton.onclick = async () => {
         mainScreenDiv.remove()
         await mainScreen();
     };
+
+    const switchHolder = await blobsAPI.getFile("/system/env/modules/switch/classicSwitch.html")
+    mainScreenDiv.innerHTML += switchHolder
+
+    const switchButton = await blobsAPI.getFile("/system/env/modules/switch/btn.html")
+
+    mainScreenDiv.querySelector(".settings-label").textContent = "Background Type"
+    const switchEl = mainScreenDiv.querySelector(".switch");
+    switchEl.innerHTML += switchButton;
+    switchEl.innerHTML += switchButton;
+
+    const btn = switchEl.querySelectorAll(".switch-btn");
+    btn[0].textContent = "Wallpaper";
+    btn[0].classList.add("active");
+    btn[0].dataset.pos = 0;
+    btn[1].textContent = "Solid Color"
+
+    const backgroundType = await blobsAPI.getFile("/system/env/systemconfig/settings/customization/background.txt")
 
     const wallpaperList = JSON.parse(await blobsAPI.getFile("/system/env/wallpapers/preview") || "[]");
 
@@ -88,12 +144,12 @@ async function wallpapersTabLoad() {
     wallpaperChooseTitle.style = "text-align: center;  margin: 1em;";
     mainScreenDiv.append(wallpaperChooseTitle);
 
-    const wallpaperListDiv = document.createElement("div");
+
     wallpaperListDiv.style = "display: flex; width: 95%; height: 100%; flex-wrap: wrap; justify-content: center; margin: 0.5em auto; padding-bottom: 1.5em;";
 
-    for (const wallpaperPath of wallpaperList) {
+    for await (const wallpaperPath of wallpaperList) {
         const wallpaperButton = document.createElement("button");
-        wallpaperButton.style.width = blobsAPI.getWindowSize() / 5 + "px";
+        wallpaperButton.style.width = "45%";
         wallpaperButton.style.margin = "1em";
         wallpaperButton.style.overflow = "hidden";
         wallpaperButton.style.minWidth = blobsAPI.getWindowSize() / 5 + "px";
@@ -163,6 +219,35 @@ async function wallpapersTabLoad() {
     };
 
     mainScreenDiv.append(wallpaperListDiv);
+
+    const colorChooseTitle = document.createElement("h3");
+    colorChooseTitle.textContent = "Choose a color";
+    colorChooseTitle.style = "text-align: center;  margin: 1em; display: none;";
+    mainScreenDiv.append(colorChooseTitle);
+
+    const colorListDiv = document.createElement("div");
+    colorListDiv.style = "display: none; width: 95%; height: 100%; flex-wrap: wrap; justify-content: center; margin: 0.5em auto; padding-bottom: 1.5em;";
+
+    const colors = ["#F51A10", "#F53B05", "#F56505", "#F58F05", "#F5AC05", "#E6DE00", "#B8E64C", "#A0E600", "#41E600", "#00E61A", "#00E688", "#00E6D6", "#4CBFE6", "#00ACE6", "#0063E6", "#011BE6", "#7F1EFF", "#C821FC", "#FA76E5", "#FA23D7", "#FA2356", "#FA3A23"]
+    colors.forEach(color => {
+        const colorButton = document.createElement("button");
+        colorButton.style.width = "20%";
+        colorButton.style.margin = "1em";
+        colorButton.style.overflow = "hidden";
+        colorButton.style.minWidth = blobsAPI.getWindowSize() / 5 + "px";
+        colorButton.style.flex = "1 0 " + blobsAPI.getWindowColor();
+        colorButton.style.maxWidth = blobsAPI.getWindowSize() / 5 + "px";
+        colorButton.style.aspectRatio = "16 / 9";
+        colorButton.style.padding = "0";
+        colorButton.style.background = color
+        colorListDiv.append(colorButton)
+        colorButton.onclick = async () => {
+            await blobsAPI.writeFile("/system/env/systemconfig/settings/customization/wallpaperchosen.txt", "file", color);
+        };
+    })
+    mainScreenDiv.append(colorListDiv)
+
+    registerSwitches(mainScreenDiv, wallpaperListDiv, colorListDiv)
 }
 async function customizationTabLoad() {
     await blobsAPI.setTitle("Settings — Customization");

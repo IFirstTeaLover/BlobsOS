@@ -45,7 +45,6 @@ document.querySelectorAll(".switch").forEach(switchEl => {
         btn.addEventListener("click", () => {
             buttons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-            console.log(btn)
 
             indicator.style.transform =
                 `translateX(${index * 100}%)`;

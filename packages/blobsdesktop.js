@@ -1831,6 +1831,7 @@ window.blobsdesktop = (() => {
             position: absolute;
             right: 0;
             top: -4px;
+            height: 100%;
         `;
         const appBar = quantum.document.getElementById("appBar");
 

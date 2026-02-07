@@ -1822,9 +1822,11 @@ window.blobsdesktop = (() => {
         const container = quantum.document.createElement("div");
         container.className = "app-container";
         container.style = `width: 100%; height: calc(100%); overflow: auto; position: relative;`;
+        
         const closeButton = quantum.document.createElement("button");
-        closeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
-        closeButton.style = `
+        const fullscreenButton = quantum.document.createElement("button");
+        const minifyButton = quantum.document.createElement("button");
+        const defTopBarStyle = `
             background: transparent;
             border: none;
             cursor: pointer;
@@ -1832,7 +1834,17 @@ window.blobsdesktop = (() => {
             right: 0;
             top: -4px;
             height: 100%;
-        `;
+        `
+        closeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+        fullscreenButton.innerHTML = `<?xml version="1.0" encoding="utf-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+        
+        closeButton.style = defTopBarStyle;
+        fullscreenButton.style = defTopBarStyle;
+        fullscreenButton.style.right = "25.37px";
+        
         const appBar = quantum.document.getElementById("appBar");
 
         const appToDock = quantum.document.createElement("div");
@@ -1912,6 +1924,7 @@ window.blobsdesktop = (() => {
         titleBar.append(appTitle);
         if (extra !== "core") {
             titleBar.appendChild(closeButton);
+            titleBar.appendChild(fullscreenButton);
         }
         if (extra !== "core") {
             outerContainer.append(titleBar);

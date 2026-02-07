@@ -1840,10 +1840,15 @@ window.blobsdesktop = (() => {
 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`;
+        minifyButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M240-440q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h480q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H240Z"/></svg>`
         
         closeButton.style = defTopBarStyle;
+        
         fullscreenButton.style = defTopBarStyle;
-        fullscreenButton.style.right = "25.37px";
+        fullscreenButton.style.right = "25.325px";
+        
+        minifyButton.style = defTopBarStyle;
+        minifyButton.style.right = "50.65px;
         
         const appBar = quantum.document.getElementById("appBar");
 
@@ -1925,6 +1930,7 @@ window.blobsdesktop = (() => {
         if (extra !== "core") {
             titleBar.appendChild(closeButton);
             titleBar.appendChild(fullscreenButton);
+            titleBar.appendChild(minifyButton);
         }
         if (extra !== "core") {
             outerContainer.append(titleBar);

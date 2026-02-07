@@ -1848,7 +1848,7 @@ window.blobsdesktop = (() => {
         fullscreenButton.style.right = "25.325px";
         
         minifyButton.style = defTopBarStyle;
-        minifyButton.style.right = "50.65px;
+        minifyButton.style.right = "50.65px";
         
         const appBar = quantum.document.getElementById("appBar");
 
